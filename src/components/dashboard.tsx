@@ -9,11 +9,10 @@ const Dashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Logout function to clear localStorage and redirect to login page
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    navigate('/login'); // Redirect to login page
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -57,7 +56,7 @@ const Dashboard = () => {
       }
     };
 
-    fetchUserProfile(token); // Call the function to fetch user data
+    fetchUserProfile(token); 
   }, [navigate]);
 
   if (loading) {
