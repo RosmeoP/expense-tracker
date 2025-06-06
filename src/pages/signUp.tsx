@@ -54,8 +54,8 @@ const SignUp = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white rounded-3xl shadow-lg flex w-full max-w-5xl overflow-hidden">
         <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
-          <h2 className="text-3xl font-bold mb-2">Get Started Now</h2>
-          <p className="text-gray-500 mb-6">Enter your credentials to access your account</p>
+          <h2 className="text-3xl font-bold mb-2">Take Control of Your Finances</h2>
+          <p className="text-gray-500 mb-6">Create an account today to start tracking your expenses, setting budgets, and making informed financial decisions.</p>
 
           {error.general && (
             <div className="bg-red-100 text-red-700 p-3 rounded-md mb-4">
@@ -150,12 +150,12 @@ const SignUp = () => {
             Have an account? <a href="/login" className="text-blue-600 underline">Sign in</a>
           </div>
 
-          <p className="mt-4 text-xs text-gray-400 text-center">2022 Acme, All right Reserved</p>
+          <p className="mt-4 text-xs text-gray-400 text-center">2025 KashKeeper, All right Reserved</p>
         </div>
 
         <div className="hidden md:flex w-1/2 bg-blue-600 flex-col justify-center items-center text-white p-10">
-          <h3 className="text-2xl font-bold mb-2">The simplest way to manage your workforce</h3>
-          <p className="mb-8 text-blue-100">Enter your credentials to access your account</p>
+          <h3 className="text-2xl font-bold mb-2">Track Your Spending with Confidence</h3>
+          <p className="mb-8 text-blue-100">Join now and stay on top of your finances with a simple, powerful tracking tool.</p>
           <div className="w-full h-64 bg-blue-500 rounded-xl flex items-center justify-center">
             <span className="text-4xl opacity-30">[Dashboard Preview]</span>
           </div>
