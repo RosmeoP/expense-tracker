@@ -5,17 +5,16 @@ const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');  // Assuming the token is stored in localStorage
-
+    const token = localStorage.getItem('token');  
     if (token) {
       axios
         .get('http://localhost:3000/api/profile', {
           headers: {
-            Authorization: `Bearer ${token}`,  // Sending the token to the backend
+            Authorization: `Bearer ${token}`, 
           },
         })
         .then((response) => {
-          setUser(response.data.user);  // Set user data for the dashboard
+          setUser(response.data.user);  
         })
         .catch((error) => {
           console.error('Error fetching user data:', error);
