@@ -70,8 +70,7 @@ const Dashboard = () => {
   return (
     <div>
       <h2>Dashboard</h2>
-      <p>Welcome, {user.email}!</p>
-      <p>User ID: {user.id}</p>
+      <p>Welcome, {user?.name || 'User'}!</p> 
       <button onClick={handleLogout} className="bg-red-600 text-white p-2 rounded mt-4">
         Log Out
       </button>

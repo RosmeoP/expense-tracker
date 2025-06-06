@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/login.tsx';
 import SignUp from './pages/signUp.tsx';
 import Dashboard from './components/dashboard.tsx';
-import ProtectedRoute from './components/protectedRoute.tsx'; 
+import ProtectedRoute from './components/auth/protectedRoute.tsx'; 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
