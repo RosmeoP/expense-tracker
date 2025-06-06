@@ -1,38 +1,66 @@
-// src/services/authService.ts
 import axios from 'axios';
 
 const API_URL = 'http://localhost:3000/api';  
 
+// Helper function to check if the token has expired
+const isTokenExpired = (token: string) => {
+  const payload = JSON.parse(atob(token.split('.')[1]));  // Decode the JWT token to get the payload
+  const expiry = payload.exp * 1000;  // Convert expiration time to milliseconds
+  return expiry < Date.now();  // Check if token has expired
+};
+
+// Register user function
 export const registerUser = async (email: string, password: string, name: string) => {
   try {
     const response = await axios.post(`${API_URL}/register`, { email, password, name }, { withCredentials: true });
-    return response.data;  
+    
+    // Save the token in localStorage after registration
+    if (response.data.token) {
+      localStorage.setItem('accessToken', response.data.token);  // Save the JWT token in localStorage
+      console.log('Registration successful, token saved:', response.data.token);
+    }
+
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 400 || error.response?.status === 409) {
+        console.error('Registration error:', error.response?.data);
         throw new Error('Email already in use. Please try another one.');
       }
+      console.error('General registration error:', error.response?.data);
       throw new Error(error.response?.data?.message || 'Error during sign-up');
     }
+    console.error('Error during registration:', error);
     throw new Error('Error during sign-up');
   }
 };
 
+
+// Login user function
 export const loginUser = async (email: string, password: string) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, { email, password }, { withCredentials: true });
-    // Store tokens in localStorage or sessionStorage
-    localStorage.setItem('accessToken', response.data.accessToken);
-    localStorage.setItem('refreshToken', response.data.refreshToken);
-    return response.data;
+    const response = await axios.post(`${API_URL}/login`, { email, password });
+
+    if (response && response.data && response.data.accessToken && response.data.refreshToken) {
+      localStorage.setItem('accessToken', response.data.accessToken);  
+      localStorage.setItem('refreshToken', response.data.refreshToken);  
+      return response.data;  
+    } else {
+      console.error('Login response is missing access or refresh token:', response.data);
+      throw new Error('Login failed: Missing tokens in response');
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || 'Error during login');
+      console.error('Login failed:', error.response?.data || error.message);  
+      throw new Error(error.response?.data?.message || 'Login failed');  
+    } else {
+      console.error('Login failed:', (error as any).message || error);  
+      throw new Error('Login failed');  
     }
-    throw new Error('Error during login');
   }
 };
 
+// Refresh token function
 export const refreshToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   if (!refreshToken) {
@@ -40,6 +68,7 @@ export const refreshToken = async () => {
   }
 
   try {
+    console.log('Refreshing token...'); 
     const response = await axios.post(
       `${API_URL}/refresh-token`,
       { refreshToken },
@@ -48,6 +77,7 @@ export const refreshToken = async () => {
     // Store new tokens
     localStorage.setItem('accessToken', response.data.accessToken);
     localStorage.setItem('refreshToken', response.data.refreshToken);
+    console.log('Token refresh successful, new tokens saved');  
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -58,20 +88,30 @@ export const refreshToken = async () => {
 };
 
 export const fetchProfile = async () => {
-  const accessToken = localStorage.getItem('accessToken');
+  let accessToken = localStorage.getItem('accessToken');
   if (!accessToken) {
     throw new Error('Access token is missing');
+  }
+
+  const tokenExpired = isTokenExpired(accessToken);
+  if (tokenExpired) {
+    console.log("Access token expired, refreshing...");
+    const tokens = await refreshToken();  
+    accessToken = tokens.accessToken;
   }
 
   try {
     const response = await axios.get(`${API_URL}/profile`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,  
+        Authorization: `Bearer ${accessToken}`,
       },
       withCredentials: true,
     });
-    return response.data;  
+    console.log("Profile Response:", response.data); 
+    return response.data;
   } catch (error) {
+    console.error("Error fetching profile:", error);  
+
     if (axios.isAxiosError(error)) {
       throw new Error(error.response?.data?.message || 'Error fetching profile');
     }

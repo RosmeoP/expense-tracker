@@ -1,29 +1,71 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { refreshToken } from '../services/authService';
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  // Logout function to clear localStorage and redirect to login page
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/login'); // Redirect to login page
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');  
-    if (token) {
-      axios
-        .get('http://localhost:3000/api/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-          },
-        })
-        .then((response) => {
-          setUser(response.data.user);  
-        })
-        .catch((error) => {
-          console.error('Error fetching user data:', error);
-        });
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      setError('No token found, please log in again.');
+      setLoading(false);
+      return;
     }
-  }, []);
 
-  if (!user) {
+    const fetchUserProfile = async (token: string) => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(response.data.user);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          try {
+            const refreshedTokens = await refreshToken();
+            const newToken = refreshedTokens.accessToken;
+            localStorage.setItem('accessToken', newToken);  
+
+            const retryResponse = await axios.get('http://localhost:3000/api/profile', {
+              headers: {
+                Authorization: `Bearer ${newToken}`,
+              },
+            });
+            setUser(retryResponse.data.user);
+          } catch (refreshError) {
+            setError('Failed to refresh token. Please log in again.');
+            navigate('/login');
+          }
+        } else {
+          setError('Error fetching user data.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserProfile(token); // Call the function to fetch user data
+  }, [navigate]);
+
+  if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
@@ -31,6 +73,9 @@ const Dashboard = () => {
       <h2>Dashboard</h2>
       <p>Welcome, {user.email}!</p>
       <p>User ID: {user.id}</p>
+      <button onClick={handleLogout} className="bg-red-600 text-white p-2 rounded mt-4">
+        Log Out
+      </button>
     </div>
   );
 };

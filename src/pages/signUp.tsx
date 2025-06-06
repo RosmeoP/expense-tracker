@@ -43,7 +43,7 @@ const SignUp = () => {
 
     try {
       await registerUser(email, password, name);
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (err: any) {
       setLoading(false);
       setError({ general: err.message });

@@ -1,15 +1,14 @@
-
+// src/components/protectedRoute.tsx
 import { Navigate, Outlet } from 'react-router-dom';
 
 const ProtectedRoute = () => {
-  const token = localStorage.getItem('token');  
+  const accessToken = localStorage.getItem('accessToken');
 
-  if (!token) {
-    
-    return <Navigate to="/" />;
+  if (!accessToken) {
+    return <Navigate to="/login" />;
   }
 
-  return <Outlet />; 
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
