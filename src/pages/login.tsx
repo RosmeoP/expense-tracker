@@ -1,4 +1,3 @@
-// src/pages/Login.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authService'; 
@@ -12,7 +11,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await loginUser(email, password);  
-      navigate('/dashboard');  // Redirect to dashboard after successful login
+      navigate('/dashboard'); 
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error during login:', error.message);

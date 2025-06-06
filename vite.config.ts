@@ -1,7 +1,11 @@
 // vite.config.ts
 import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  plugins: [
+    tailwindcss()
+  ],
   server: {
     proxy: {
       '/api': {
@@ -10,5 +14,6 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''), 
       },
     },
+  
   },
 });
