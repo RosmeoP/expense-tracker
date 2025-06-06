@@ -4,9 +4,9 @@ const API_URL = 'http://localhost:3000/api';
 
 // Helper function to check if the token has expired
 const isTokenExpired = (token: string) => {
-  const payload = JSON.parse(atob(token.split('.')[1]));  // Decode the JWT token to get the payload
-  const expiry = payload.exp * 1000;  // Convert expiration time to milliseconds
-  return expiry < Date.now();  // Check if token has expired
+  const payload = JSON.parse(atob(token.split('.')[1]));  
+  const expiry = payload.exp * 1000; 
+  return expiry < Date.now(); 
 };
 
 // Register user function
@@ -14,10 +14,8 @@ export const registerUser = async (email: string, password: string, name: string
   try {
     const response = await axios.post(`${API_URL}/register`, { email, password, name }, { withCredentials: true });
     
-    // Save the token in localStorage after registration
     if (response.data.token) {
-      localStorage.setItem('accessToken', response.data.token);  // Save the JWT token in localStorage
-      console.log('Registration successful, token saved:', response.data.token);
+      localStorage.setItem('accessToken', response.data.token);  
     }
 
     return response.data;
@@ -77,7 +75,6 @@ export const refreshToken = async () => {
     // Store new tokens
     localStorage.setItem('accessToken', response.data.accessToken);
     localStorage.setItem('refreshToken', response.data.refreshToken);
-    console.log('Token refresh successful, new tokens saved');  
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

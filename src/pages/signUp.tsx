@@ -6,15 +6,19 @@ const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [agree, setAgree] = useState(false);
-  const [error, setError] = useState<{ name?: string; email?: string; password?: string; agree?: string; general?: string }>({});
+  const [error, setError] = useState<{ name?: string; email?: string; password?: string; confirmPassword?: string; agree?: string; general?: string }>({});
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (field: string, value: string | boolean) => {
     if (field === 'name') setName(value as string);
     if (field === 'email') setEmail(value as string);
     if (field === 'password') setPassword(value as string);
+    if (field === 'confirmPassword') setConfirmPassword(value as string);
     if (field === 'agree') setAgree(value as boolean);
 
     setError((prevError) => ({
@@ -31,9 +35,10 @@ const SignUp = () => {
     if (!name) formError.name = 'Full name is required.';
     if (!email) formError.email = 'Email address is required.';
     if (!password) formError.password = 'Password is required.';
+    if (password !== confirmPassword) formError.confirmPassword = 'Passwords do not match.';
     if (!agree) formError.agree = 'You must agree to the terms and privacy policy to continue.';
 
-    if (formError.name || formError.email || formError.password || formError.agree) {
+    if (formError.name || formError.email || formError.password || formError.confirmPassword || formError.agree) {
       setError(formError);
       return;
     }
@@ -51,23 +56,24 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white rounded-3xl shadow-lg flex w-full max-w-5xl overflow-hidden">
-        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
-          <h2 className="text-3xl font-bold mb-2">Take Control of Your Finances</h2>
-          <p className="text-gray-500 mb-6">Create an account today to start tracking your expenses, setting budgets, and making informed financial decisions.</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#181A20]">
+      <div className="bg-[#23263b] rounded-3xl shadow-2xl flex w-full max-w-4xl overflow-hidden">
+        {/* Left Form Section */}
+        <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
+          <h2 className="text-2xl font-bold mb-4 text-center text-white">Take Control of Your Finances</h2>
+          <p className="text-gray-400 mb-4 text-center">Create an account today to start tracking your expenses, setting budgets, and making informed financial decisions.</p>
 
           {error.general && (
-            <div className="bg-red-100 text-red-700 p-3 rounded-md mb-4">
+            <div className="bg-red-900 text-red-300 p-3 rounded-md mb-4">
               {error.general}
             </div>
           )}
 
-         <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
             <div className="flex justify-center gap-4 mb-4">
               <button
                 type="button"
-                className="w-1/2 flex items-center justify-center gap-2 border border-gray-200 py-2 rounded-lg hover:bg-gray-50 transition text-sm"
+                className="w-1/2 flex items-center justify-center gap-2 border border-gray-700 bg-[#23263b] py-2 rounded-lg hover:bg-[#282c3f] transition text-sm text-white"
               >
                 <svg className="w-5 h-5" viewBox="0 0 48 48">
                   <g>
@@ -81,56 +87,91 @@ const SignUp = () => {
               </button>
               <button
                 onClick={() => console.log('Login with Apple')}
-                className="w-1/2 bg-gray-200 text-gray-800 py-2 rounded-lg font-semibold hover:bg-gray-300 transition text-sm"
+                className="w-1/2 bg-gray-700 text-gray-200 py-2 rounded-lg font-semibold hover:bg-gray-600 transition text-sm"
               >
                 Sign Up with Apple
               </button>
             </div>
             <div className="flex items-center mb-4">
-              <hr className="flex-1 border-gray-300" />
-              <span className="mx-4 text-gray-600">Or</span>
-              <hr className="flex-1 border-gray-300" />
+              <hr className="flex-1 border-gray-700" />
+              <span className="mx-4 text-gray-400">Or</span>
+              <hr className="flex-1 border-gray-700" />
             </div>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Full Name</label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-                value={name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                placeholder="Your name"
-              />
-              {error.name && <p className="text-red-600 text-sm">{error.name}</p>}
-            </div>
+        <form className="space-y-3" onSubmit={handleSubmit}>
+          <div>
+            <label className="block text-gray-200 font-medium mb-1">Full Name</label>
+            <input
+              type="text"
+              className="w-full px-4 py-2 bg-[#23263b] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500"
+              value={name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              placeholder="Your name"
+            />
+            {error.name && (
+              <p className="text-red-400 text-xs mt-1">{error.name}</p>
+            )}
+          </div>
 
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Email address</label>
-              <input
-                type="email"
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-                value={email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                placeholder="you@example.com"
-              />
-              {error.email && <p className="text-red-600 text-sm">{error.email}</p>}
-            </div>
-
-            <div>
-              <div className="flex justify-between items-center">
-                <label className="block text-gray-700 font-medium mb-1">Password</label>
+          <div>
+            <label className="block text-gray-200 font-medium mb-1">Email address</label>
+            <input
+              type="email"
+              className="w-full px-4 py-2 bg-[#23263b] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500"
+              value={email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              placeholder="you@example.com"
+            />
+            {error.email && (
+              <p className="text-red-400 text-xs mt-1">{error.email}</p>
+            )}
+          </div>
+            <div className="flex items-center justify-between">
+              <div className="w-10/12">
+                <div className="flex justify-between items-center">
+                  <label className="block text-gray-200 font-medium mb-1">Password</label>
+                </div>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  className="w-full px-4 py-2 bg-[#23263b] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500"
+                  value={password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  minLength={8}
+                  placeholder="min 8 chars"
+                />
+                {error.password && <p className="text-red-400 text-xs mt-1">{error.password}</p>}
               </div>
-              <input
-                type="password"
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-                value={password}
-                onChange={(e) => handleInputChange('password', e.target.value)}
-                minLength={8}
-                placeholder="min 8 chars"
-              />
-              {error.password && <p className="text-red-600 text-sm">{error.password}</p>}
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="w-1/12 text-xs text-purple-400"
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="w-10/12">
+                <div className="flex justify-between items-center">
+                  <label className="block text-gray-200 font-medium mb-1">Confirm Password</label>
+                </div>
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  className="w-full px-4 py-2 bg-[#23263b] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500"
+                  value={confirmPassword}
+                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  placeholder="Confirm your password"
+                />
+                {error.confirmPassword && <p className="text-red-400 text-xs mt-1">{error.confirmPassword}</p>}
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="w-1/12 text-xs text-purple-400"
+              >
+                {showConfirmPassword ? 'Hide' : 'Show'}
+              </button>
             </div>
 
             <div className="flex items-center gap-2">
@@ -138,36 +179,38 @@ const SignUp = () => {
                 type="checkbox"
                 checked={agree}
                 onChange={(e) => handleInputChange('agree', e.target.checked)}
+                className="accent-purple-500"
               />
-              <span className="text-gray-600 text-sm">
-                I agree to the <a href="#" className="text-blue-600 underline">Terms & Privacy</a>
+              <span className="text-gray-300 text-sm">
+                I agree to the <a href="#" className="text-purple-400 underline">Terms & Privacy</a>
               </span>
-              {error.agree && <p className="text-red-600 text-sm">{error.agree}</p>}
+              {error.agree && <p className="text-red-400 text-xs mt-1">{error.agree}</p>}
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition"
               disabled={loading}
             >
               {loading ? 'Signing Up...' : 'Sign Up'}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-gray-600 text-sm">
-            Have an account? <a href="/login" className="text-blue-600 underline">Sign in</a>
+          <div className="mt-6 text-center text-gray-400 text-sm">
+            Have an account? <a href="/login" className="text-purple-400 underline">Sign in</a>
           </div>
 
-          <p className="mt-4 text-xs text-gray-400 text-center">2025 KashKeeper, All right Reserved</p>
+          <p className="mt-4 text-xs text-gray-600 text-center">2025 KashKeeper, All right Reserved</p>
         </div>
 
-        <div className="hidden md:flex w-1/2 bg-blue-600 flex-col justify-center items-center text-white p-10">
-          <h3 className="text-2xl font-bold mb-2">Track Your Spending with Confidence</h3>
-          <p className="mb-8 text-blue-100">Join now and stay on top of your finances with a simple, powerful tracking tool.</p>
-          <div className="w-full h-64 bg-blue-500 rounded-xl flex items-center justify-center">
+        {/* Right Panel Section */}
+        <div className="hidden md:flex w-1/2 bg-gradient-to-br from-[#23263b] to-[#181A20] flex-col justify-center items-center text-white p-10">
+          <h3 className="text-2xl font-bold mb-2 text-white">Track Your Spending with Confidence</h3>
+          <p className="mb-8 text-purple-200">Join now and stay on top of your finances with a simple, powerful tracking tool.</p>
+          <div className="w-full h-64 bg-[#23263b] rounded-xl flex items-center justify-center">
             <span className="text-4xl opacity-30">[Dashboard Preview]</span>
           </div>
-          <div className="flex gap-6 mt-8 opacity-80">
+          <div className="flex gap-6 mt-8 opacity-80 text-purple-200">
             <span>WeChat</span>
             <span>Booking.com</span>
             <span>Google</span>
