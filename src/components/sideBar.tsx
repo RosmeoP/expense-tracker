@@ -1,4 +1,11 @@
-import { FaHome, FaWallet, FaChartPie, FaList, FaCog, FaBullseye } from 'react-icons/fa';
+import {
+  Home,
+  Wallet,
+  BarChart2,
+  List,
+  Settings,
+  Target
+} from "lucide-react";
 import { Separator } from './ui/separator';
 
 
@@ -14,8 +21,8 @@ const SideBar = () => {
         {/* Main Section */}
         <div>
           <p className="hidden md:block text-gray-400 text-sm mb-2 px-2">Main</p>
-          <NavItem href="/dashboard" icon={<FaHome />} label="Dashboard" />
-          <NavItem href="/transactions" icon={<FaList />} label="Transactions" />
+          <NavItem href="/dashboard" icon={<Home size={18} />} label="Dashboard" />
+          <NavItem href="/transactions" icon={<List size={18} />} label="Transactions" />
         </div>
 
         <Separator className="bg-[#23263b]" />
@@ -23,9 +30,9 @@ const SideBar = () => {
         {/* Planning Section */}
         <div>
           <p className="hidden md:block text-gray-400 text-sm mb-2 px-2">Planning</p>
-          <NavItem href="/budgets" icon={<FaWallet />} label="Budgets" />
-          <NavItem href="/reports" icon={<FaChartPie />} label="Reports" />
-          <NavItem href="/goals" icon={<FaBullseye />} label="Goals" />
+          <NavItem href="/budgets" icon={<Wallet size={18} />} label="Budgets" />
+          <NavItem href="/reports" icon={<BarChart2 size={18} />} label="Reports" />
+          <NavItem href="/goals" icon={<Target size={18} />} label="Goals" />
         </div>
 
         <Separator className="bg-[#23263b]" />
@@ -33,7 +40,7 @@ const SideBar = () => {
         {/* Settings Section */}
         <div className="mt-auto pb-4">
           <p className="hidden md:block text-gray-400 text-sm mb-2 px-2">Settings</p>
-          <NavItem href="/settings" icon={<FaCog />} label="Settings" muted />
+          <NavItem href="/settings" icon={<Settings size={18} />} label="Settings" muted />
         </div>
       </nav>
     </aside>
