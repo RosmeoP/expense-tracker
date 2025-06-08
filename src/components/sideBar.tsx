@@ -1,10 +1,10 @@
 import {
   Home,
   Wallet,
-  BarChart2,
-  List,
+  ChartPie,
+  ScanLine,
   Settings,
-  Target
+  Trophy
 } from "lucide-react";
 import { Separator } from './ui/separator';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../components/ui/tooltip";
@@ -12,12 +12,14 @@ import { useLocation } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
-  { href: "/transactions", label: "Transactions", icon: List },
+  { href: "/transactions", label: "Transactions", icon: ScanLine },
   { href: "/budgets", label: "Budgets", icon: Wallet },
-  { href: "/reports", label: "Reports", icon: BarChart2 },
-  { href: "/goals", label: "Goals", icon: Target },
+  { href: "/reports", label: "Reports", icon: ChartPie},
+  { href: "/goals", label: "Goals", icon: Trophy },
   { href: "/settings", label: "Settings", icon: Settings, muted: true }
 ];
+
+
 
 const SideBar = () => {
   const { pathname } = useLocation();
@@ -58,7 +60,7 @@ const SideBar = () => {
       </TooltipProvider>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-black border-t border-[#23263b] text-white flex justify-around items-center h-16 z-50">
+      <nav className="md:hidden fixed bottom-0 rounded-4xl mx-4 mb-4 left-0 right-0 bg-black border-t border-[#23263b] text-white flex justify-around items-center h-16 z-50">
         {NAV_ITEMS.slice(0, 5).map(item => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
