@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   { href: "/budgets", label: "Budgets", icon: Wallet },
   { href: "/reports", label: "Reports", icon: ChartPie},
   { href: "/goals", label: "Goals", icon: Trophy },
-  { href: "/settings", label: "Settings", icon: Settings, muted: true }
+  { href: "/settings", label: "Settings", icon: Settings,  }
 ];
 
 
@@ -51,7 +51,7 @@ const SideBar = () => {
             <Separator className="bg-[#23263b]" />
 
             <div className="mt-auto pb-4">
-              <SidebarSection title="Settings">
+              <SidebarSection title="Account">
                 <NavItem {...NAV_ITEMS[5]} active={pathname === NAV_ITEMS[5].href} />
               </SidebarSection>
             </div>

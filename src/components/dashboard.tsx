@@ -3,8 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { refreshToken } from "../services/authService";
 import SideBar from "./sideBar";
-// Import ModeToggle here
-
+import { WidgetBalance, WidgetExpenses, WidgetIncome } from "./widget/widget";
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -70,10 +69,23 @@ const Dashboard = () => {
   }
 
   return (
-      <div>
-     
-        <SideBar />
+       <div className="min-h-screen bg-gray-50 flex">
+    {/* Uncomment to enable sidebar */}
+     <SideBar /> 
+    <main className="flex-1 p-8">
+      <div className="flex flex-col gap-8 items-center">
+        {/* Top row: Large Balance Widget */}
+        <div className="w-full flex justify-center">
+          <WidgetBalance value="$1,200" trend={8.2} />
+        </div>
+        {/* Bottom row: Two smaller widgets */}
+        <div className="flex gap-8 justify-center w-full">
+          <WidgetExpenses value="$450" subtitle="This month" />
+          <WidgetIncome value="$2,000" />
+        </div>
       </div>
+    </main>
+  </div>
 
      
      
