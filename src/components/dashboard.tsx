@@ -10,11 +10,7 @@ const Dashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    navigate("/login");
-  };
+ 
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -69,26 +65,26 @@ const Dashboard = () => {
   }
 
   return (
-       <div className="min-h-screen bg-gray-50 flex">
-    {/* Uncomment to enable sidebar */}
-     <SideBar /> 
-    <main className="flex-1 p-8">
-      <div className="flex flex-col gap-8 items-center">
-        {/* Top row: Large Balance Widget */}
-        <div className="w-full flex justify-center">
-          <WidgetBalance value="$1,200" trend={8.2} />
-        </div>
-        {/* Bottom row: Two smaller widgets */}
-        <div className="flex gap-8 justify-center w-full">
-          <WidgetExpenses value="$450" subtitle="This month" />
-          <WidgetIncome value="$2,000" />
+    <div className="min-h-screen bg-black flex flex-col md:flex-row">
+      <SideBar />
+      <div className="w-full flex justify-center items-center px-2 py-4 md:px-0 md:py-0">
+        <div className="bg-white rounded-xl md:rounded-3xl md:border-4 md:border-black w-full max-w-full md:max-w-[90vw] min-h-[80vh] md:min-h-[95vh] flex flex-col shadow-xl p-2 md:p-0">
+          <main className="flex-1 p-4 md:p-12">
+            <div className="flex flex-col gap-6 md:gap-10 items-center">
+              {/* Top row: Large Balance Widget */}
+              <div className="w-full flex justify-center">
+                <WidgetBalance value="$1,200" trend={8.2} />
+              </div>
+              {/* Bottom row: Two smaller widgets */}
+              <div className="flex flex-col md:flex-row gap-6 md:gap-12 justify-center w-full">
+                <WidgetExpenses value="$450" subtitle="This month" />
+                <WidgetIncome value="$2,000" />
+              </div>
+            </div>
+          </main>
         </div>
       </div>
-    </main>
-  </div>
-
-     
-     
+    </div>
   );
 };
 
