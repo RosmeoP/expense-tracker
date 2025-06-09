@@ -71,26 +71,28 @@ const SideBar = () => {
           </div>
         </aside>
       </TooltipProvider>
-      {/* ...existing mobile nav... */}
-      {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 rounded-4xl mx-4 mb-4 left-0 right-0 bg-black text-white flex justify-around items-center h-16 z-50">
-        {NAV_ITEMS.slice(0, 5).map(item => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
-          return (
-            <a
-              key={item.href}
-              href={item.href}
-              className={`flex flex-col items-center justify-center gap-1 text-xs ${
-                isActive ? "text-white" : "text-gray-400"
-              } hover:text-white transition`}
-            >
-              <Icon className="transition-transform duration-200 hover:scale-110" />
-              <span className="text-[10px]"></span>
-            </a>
-          );
-        })}
-      </nav>
+      {/* Mobile Bottom Navigation with contrasting container */}
+    
+      <div className="md:hidden fixed bottom-0 left-0  right-0 z-40 rounded-t-4xl bg-gray-300 py-2">
+        <nav className="rounded-3xl mx-4 bg-white mt-4 text-black flex justify-around items-center h-16 shadow-lg">
+          {NAV_ITEMS.slice(0, 5).map(item => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center justify-center gap-1 text-xs ${
+                  isActive ? "text-black" : "text-gray-400"
+                } hover:text-black transition`}
+              >
+                <Icon className="transition-transform duration-200 hover:scale-110" />
+                <span className="text-[11.5px] m font-bold mt-1">{item.label}</span>
+              </a>
+            );
+          })}
+        </nav>
+      </div>
     </>
   );
 };

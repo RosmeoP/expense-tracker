@@ -22,10 +22,9 @@ export const TopNav = ({ userName }: { userName: string }) => {
   }, []);
 
   return (
-<header className="w-full fixed top-0 left-0 right-0 z-30 md:static flex flex-col md:flex-row items-center justify-between gap-4 py-4 px-4 md:px-6 bg-white border-b md:border-none shadow rounded-none md:rounded-2xl">      
-      {/* Left: Greeting and Avatar + Notifications */}
+    <header className="w-full fixed top-0 left-0 right-0 z-30 md:static flex flex-col md:flex-row items-center justify-between gap-4 py-4 px-4 md:px-6 bg-white border-b md:border-none shadow rounded-none md:rounded-2xl">
       <div className="flex items-center justify-between w-full md:w-auto">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 ml2 md:ml-0">
           <div className="flex flex-col md:items-start">
             <span className="text-xs text-gray-400">Welcome back,</span>
             <span className="text-lg md:text-xl font-bold text-gray-700 flex items-center gap-1">
