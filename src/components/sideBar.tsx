@@ -73,7 +73,7 @@ const SideBar = () => {
       </TooltipProvider>
       {/* ...existing mobile nav... */}
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 rounded-4xl mx-4 mb-4 left-0 right-0 bg-black border-t border-[#23263b] text-white flex justify-around items-center h-16 z-50">
+      <nav className="md:hidden fixed bottom-0 rounded-4xl mx-4 mb-4 left-0 right-0 bg-black text-white flex justify-around items-center h-16 z-50">
         {NAV_ITEMS.slice(0, 5).map(item => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
