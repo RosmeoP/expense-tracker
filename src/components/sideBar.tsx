@@ -119,9 +119,14 @@ const NavItem = ({
     <TooltipTrigger asChild>
       <a
         href={href}
-        className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-colors group ${
-          active ? "bg-[#1f2236] text-white" : muted ? "text-gray-500" : "text-gray-300 hover:bg-[#23263b]"
-        }`}
+        className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all group mb-1
+          ${
+            active
+              ? "bg-[#23263b] text-white border-l-4 border-blue-500 shadow"
+              : muted
+              ? "text-gray-500"
+              : "text-gray-300 hover:bg-[#23263b] hover:text-white hover:mb-2"
+          }`}
       >
         <span className="text-xl"><Icon size={20} /></span>
         <span className="text-sm">{label}</span>

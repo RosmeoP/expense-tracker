@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/signup" element={<SignUp />} />
 
         <Route element={<ProtectedRoute />}>
-          <Route path="/profile" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 
       </Routes>
