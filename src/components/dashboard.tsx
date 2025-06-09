@@ -90,7 +90,6 @@ return (
         </div>
       </div>
       {/* Mobile-only Black Background at Bottom */}
-      <div className="md:hidden w-full h-[300px] rounded-2xl fixed bg-neutral-900 rounded-t-[2.5rem] mt-[-2rem] z-0" />
     </div>
   </>
 );
