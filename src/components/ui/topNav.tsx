@@ -71,6 +71,7 @@ export const TopNav = ({ userName }: { userName: string }) => {
             className="w-full rounded-lg border border-gray-200 pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition bg-white shadow-sm"
           />
         </form>
+        
       )}
     </header>
   );
