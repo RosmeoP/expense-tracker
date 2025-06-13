@@ -1,103 +1,93 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { refreshToken } from "../services/authService";
-import SideBar from "./sideBar";
-import { WidgetBalance, WidgetExpenses, WidgetIncome } from "./widget/widget";
-import { TopNav } from "./ui/topNav";
+import axios from "axios";
+import SideBar from "./SideBar";
+import DashboardOverview from "../pages/DashboardOverview";
 
+// Helper for greeting
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 6) return "Good night";
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+};
+
+// Async function to refresh token
+const refreshToken = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) throw new Error("No refresh token found");
+  const response = await axios.post("http://localhost:3000/api/refresh", { refreshToken });
+  localStorage.setItem("accessToken", response.data.accessToken);
+  localStorage.setItem("refreshToken", response.data.refreshToken);
+  return response.data;
+};
 
 const Dashboard = () => {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<{ name: string } | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
- 
+  const fetchUserProfile = useCallback(async (token: string) => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUser(response.data.user);
+    } catch (err: any) {
+      if (err.response?.status === 401) {
+        try {
+          const refreshed = await refreshToken();
+          await fetchUserProfile(refreshed.accessToken);
+        } catch {
+          setError("Session expired. Please log in again.");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          navigate("/login");
+        }
+      } else {
+        setError("Failed to fetch user profile.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
       setError("No token found, please log in again.");
       setLoading(false);
+      navigate("/login");
       return;
     }
-
-    const fetchUserProfile = async (token: string) => {
-      try {
-        const response = await axios.get("http://localhost:3000/api/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(response.data.user);
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 401) {
-          try {
-            const refreshedTokens = await refreshToken();
-            const newToken = refreshedTokens.accessToken;
-            localStorage.setItem("accessToken", newToken);
-
-            const retryResponse = await axios.get("http://localhost:3000/api/profile", {
-              headers: {
-                Authorization: `Bearer ${newToken}`,
-              },
-            });
-            setUser(retryResponse.data.user);
-          } catch (refreshError) {
-            setError("Failed to refresh token. Please log in again.");
-            navigate("/login");
-          }
-        } else {
-          setError("Error fetching user data.");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUserProfile(token);
-  }, [navigate]);
+  }, [fetchUserProfile, navigate]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div className="text-center text-white mt-20">Loading...</div>;
+  if (error) return <div className="text-center text-red-600 mt-20">{error}</div>;
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-return (
-  <>
-    <div className="min-h-screen bg-white md:bg-black flex flex-col md:flex-row relative overflow-hidden">
-      <SideBar />
-
-      {/* Main Content Area */}
-      <div className="w-full flex mt-5 mr-5 justify-center items-start px-2 md:px-0 pt-8 pb-36 md:pt-0 md:pb-0 relative z-10">
-        <div className="w-full md:mt-0 md:mr-0 bg-white rounded-xl md:rounded-3xl md:border-4 md:border-black md:max-w-[90vw] md:min-h-[95vh] md:shadow-xl md:p-0">
-          {/* Add TopNav here */}
-          <TopNav userName={user?.name || "User"} />
-          <main className="flex-1 p-4 md:p-12">
-            <div className="flex flex-col gap-6 md:gap-10 items-center">
-              {/* Top row: Large Balance Widget */}
-              <div className="w-full flex justify-center"></div>
-              <div className="flex flex-col md:flex-row gap-4 md:gap-8 w-full items-center justify-center">
-                <WidgetExpenses value="$450" subtitle="This month" />
-                <WidgetIncome value="$2,000" />
-                <WidgetBalance value="$1,200" trend={8.2} />
-              </div>
-            </div>
-          </main>
+  return (
+    <div className="min-h-screen flex bg-blue-700 overflow-hidden">
+      <aside className="w-64 min-h-screen fixed left-0 top-0 bottom-0 z-20">
+        <SideBar />
+      </aside>
+      <main className="flex-1 ml-64 min-h-screen flex flex-col bg-blue-700">
+        <div className="w-full max-w-6xl p-8 bg-white rounded-3xl shadow-2xl mx-auto mt-12 mb-12 min-h-[calc(100vh-6rem)] overflow-auto flex flex-col">
+          <div className="mb-6">
+            <p className="text-gray-500 text-sm mb-1">Welcome back,</p>
+            <h2 className="text-3xl font-extrabold text-blue-800">
+              {getGreeting()}, {user?.name}
+            </h2>
+          </div>
+          <div className="flex-1 min-h-0">
+            <DashboardOverview />
+          </div>
         </div>
-      </div>
-      {/* Mobile-only Black Background at Bottom */}
+      </main>
     </div>
-  </>
-);
-
-
- 
-
-
+  );
 };
 
 export default Dashboard;

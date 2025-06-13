@@ -241,7 +241,6 @@ const SignUp = () => {
           <div className="w-full h-64 bg-white rounded-xl flex items-center justify-center border border-blue-100">
             <span className="text-4xl opacity-30 text-blue-300">[Dashboard Preview]</span>
           </div>
-          {/* Removed the brand names for a cleaner look */}
         </div>
       </div>
     </div>

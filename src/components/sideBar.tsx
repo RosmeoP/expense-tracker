@@ -32,8 +32,8 @@ const SideBar = () => {
     <>
       {/* Desktop Sidebar - Full Width */}
       <TooltipProvider>
-        <aside className="hidden md:flex h-screen w-56 bg-black text-white flex-col shadow-lg" role="navigation" aria-label="Sidebar">
-          <div className="flex flex-col items-center justify-between h-full w-full">
+        <aside className="hidden md:flex h-screen w-56  bg-blue-700 text-white flex-col shadow-lg" role="navigation" aria-label="Sidebar">
+          <div className="flex flex-col  items-center justify-between h-full w-full">
             <div>
               <div className="flex items-center justify-center h-20 border-b border-[#23263b]">
                 <img src="/logo192.png" alt="Logo" className="w-10 h-10" />
@@ -59,7 +59,7 @@ const SideBar = () => {
             {/* Log Out Button */}
             <button
               onClick={handleLogout}
-              className="flex items-center gap-4 px-4 py-3 m-4 rounded-lg text-red-400 hover:bg-[#23263b] transition-colors"
+              className="flex items-center gap-4 px-4 py-3 m-4 rounded-lg text-red-500   bg-[#c6c8d9] transition duration-200  hover:scale-105 active:scale-95"
             >
               <span className="text-xl">
                 <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
