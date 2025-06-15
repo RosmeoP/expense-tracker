@@ -50,38 +50,50 @@ const FinancialOverview: React.FC<FinancialOverviewProps> = ({
       {/* Stat Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mt-8">
         {/* Savings Rate */}
-        <div className="bg-white rounded-xl border border-gray-100 p-4 sm:p-6 flex flex-col gap-2 shadow-md">
-          <div className="flex items-center gap-2 text-green-600">
-            <FiTrendingUp className="text-xl" />
-            <span className="text-sm font-medium">Savings Rate</span>
+        <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col shadow-md hover:shadow-xl transition-shadow hover:-translate-y-1 duration-200 group">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="bg-green-100 rounded-full p-2">
+              <FiTrendingUp className="text-2xl text-green-600" />
+            </span>
+            <span className="text-sm font-semibold text-gray-700">Savings Rate</span>
           </div>
-          <span className="text-2xl font-bold text-green-700">{savingsRate}%</span>
+          <hr className="border-gray-100 mb-2" />
+          <span className="text-2xl font-extrabold text-green-700 group-hover:text-green-800 transition">{savingsRate}%</span>
         </div>
         {/* Budget Health */}
-        <div className="bg-white rounded-xl border border-gray-100 p-4 sm:p-6 flex flex-col gap-2 shadow-md">
-          <div className="flex items-center gap-2 text-blue-600">
-            <FiPieChart className="text-xl" />
-            <span className="text-sm font-medium">Budget Health</span>
+        <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col shadow-md hover:shadow-xl transition-shadow hover:-translate-y-1 duration-200 group">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="bg-blue-100 rounded-full p-2">
+              <FiPieChart className="text-2xl text-blue-600" />
+            </span>
+            <span className="text-sm font-semibold text-gray-700">Budget Health</span>
           </div>
-          <span className="text-2xl font-bold text-blue-700">{budgetHealth}%</span>
+          <hr className="border-gray-100 mb-2" />
+          <span className="text-2xl font-extrabold text-blue-700 group-hover:text-blue-800 transition">{budgetHealth}%</span>
         </div>
         {/* Next Bill */}
-        <div className="bg-white rounded-xl border border-gray-100 p-4 sm:p-6 flex flex-col gap-2 shadow-md">
-          <div className="flex items-center gap-2 text-orange-600">
-            <FiCalendar className="text-xl" />
-            <span className="text-sm font-medium">Next Bill</span>
+        <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col shadow-md hover:shadow-xl transition-shadow hover:-translate-y-1 duration-200 group">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="bg-orange-100 rounded-full p-2">
+              <FiCalendar className="text-2xl text-orange-600" />
+            </span>
+            <span className="text-sm font-semibold text-gray-700">Next Bill</span>
           </div>
-          <span className="text-2xl font-bold text-orange-700">
+          <hr className="border-gray-100 mb-2" />
+          <span className="text-2xl font-extrabold text-orange-700 group-hover:text-orange-800 transition">
             {nextBill ? `${nextBill.daysLeft} days` : '--'}
           </span>
         </div>
         {/* Alerts */}
-        <div className="bg-white rounded-xl border border-gray-100 p-4 sm:p-6 flex flex-col gap-2 shadow-md">
-          <div className="flex items-center gap-2 text-red-500">
-            <FiAlertCircle className="text-xl" />
-            <span className="text-sm font-medium">Alerts</span>
+        <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col shadow-md hover:shadow-xl transition-shadow hover:-translate-y-1 duration-200 group">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="bg-red-100 rounded-full p-2">
+              <FiAlertCircle className="text-2xl text-red-500" />
+            </span>
+            <span className="text-sm font-semibold text-gray-700">Alerts</span>
           </div>
-          <span className="text-2xl font-bold text-red-600">{alerts.length}</span>
+          <hr className="border-gray-100 mb-2" />
+          <span className="text-2xl font-extrabold text-red-600 group-hover:text-red-700 transition">{alerts.length}</span>
         </div>
       </div>
       {/* Status and Actions */}
