@@ -32,7 +32,7 @@ const SideBar = () => {
     <>
       {/* Desktop Sidebar - Full Width */}
       <TooltipProvider>
-        <aside className="hidden md:flex h-screen w-56  bg-blue-700 text-white flex-col shadow-lg" role="navigation" aria-label="Sidebar">
+        <aside className="hidden md:flex h-screen w-56  bg-white text-red-200 flex-col shadow-lg" role="navigation" aria-label="Sidebar">
           <div className="flex flex-col  items-center justify-between h-full w-full">
             <div>
               <div className="flex items-center justify-center h-20 border-b border-[#23263b]">
@@ -83,7 +83,7 @@ const SideBar = () => {
                 key={item.href}
                 href={item.href}
                 className={`flex flex-col items-center justify-center gap-1 text-xs ${
-                  isActive ? "text-black" : "text-gray-400"
+                  isActive ? "text-black" : "text-gray-700"
                 } hover:text-black transition`}
               >
                 <Icon className="transition-transform duration-200 hover:scale-110" />
@@ -99,7 +99,7 @@ const SideBar = () => {
 
 const SidebarSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div>
-    <p className="text-gray-400 text-sm mb-2 px-2">{title}</p>
+    <p className="text-black text-sm mb-2 px-2">{title}</p>
     {children}
   </div>
 );
@@ -126,8 +126,8 @@ const NavItem = ({
             active
               ? "bg-[#23263b] text-white border-l-4 border-blue-500 shadow"
               : muted
-              ? "text-gray-500"
-              : "text-gray-300 hover:bg-[#23263b] hover:text-white hover:mb-2"
+              ? "text-gray-700"
+              : "text-gray-500 hover:bg-[#23263b] hover:text-white hover:mb-2"
           }`}
       >
         <span className="text-xl"><Icon size={20} /></span>
