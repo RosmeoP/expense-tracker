@@ -43,54 +43,10 @@ const DashboardOverview = () => {
         </div>
 
         {/* Extra Widgets */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-          {/* Upcoming Bills */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-yellow-400 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl transition-transform">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-yellow-400 text-2xl">📅</span>
-              <span className="font-semibold text-gray-700">Upcoming Bills</span>
-            </div>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>Internet <span className="float-right text-gray-400">$40</span></li>
-              <li>Credit Card <span className="float-right text-gray-400">$120</span></li>
-              <li>Netflix <span className="float-right text-gray-400">$15</span></li>
-            </ul>
-            <div className="mt-2 text-xs text-gray-400">3 bills due this week</div>
-          </div>
-          {/* Savings Goal */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-indigo-400 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl transition-transform">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-indigo-400 text-2xl">🎯</span>
-              <span className="font-semibold text-gray-700">Savings Goal</span>
-            </div>
-            <div className="text-2xl font-bold text-indigo-600 mb-1">$3,000</div>
-            <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden mb-1">
-              <div className="h-full bg-gradient-to-r from-indigo-400 to-indigo-600" style={{ width: '60%' }} />
-            </div>
-            <div className="text-xs text-gray-400">60% reached</div>
-          </div>
-          {/* Top Category */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-rose-400 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl transition-transform">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-rose-400 text-2xl">🍔</span>
-              <span className="font-semibold text-gray-700">Top Category</span>
-            </div>
-            <div className="text-lg font-bold text-rose-500 mb-1">Food & Dining</div>
-            <div className="text-xs text-gray-400">35% of expenses</div>
-          </div>
-          {/* Credit Score */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-green-400 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl transition-transform">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-green-400 text-2xl">💳</span>
-              <span className="font-semibold text-gray-700">Credit Score</span>
-            </div>
-            <div className="text-2xl font-bold text-green-600 mb-1">752</div>
-            <div className="text-xs text-gray-400">Excellent</div>
-          </div>
-        </div>
+       
 
         {/* Recent Transactions */}
-        {/* <div className="bg-white rounded-2xl shadow-xl border border-blue-100 p-8">
+        <div className="bg-white rounded-2xl shadow-xl border border-blue-100 p-8">
           <div className="flex items-center justify-between mb-6">
             <div className="text-xl font-semibold text-blue-700 flex items-center gap-2">
               <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -137,7 +93,7 @@ const DashboardOverview = () => {
               <span className="text-red-500 font-semibold">- $60.00</span>
             </li>
           </ul>
-        </div> */}
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import SideBar from "./SideBar";
+import SideBar from "../components/sideBar";
 import DashboardOverview from "../pages/DashboardOverview";
 
 // Helper for greeting
