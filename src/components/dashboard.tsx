@@ -101,15 +101,15 @@ const Dashboard = () => {
               </div>
               <div className="flex-1">
                 {/* Replace with your new component */}
-                 <SpendingByCategoryChart
-            data={[
-              { name: "Food", value: 550 },
-              { name: "Transport", value: 200 },
-              { name: "Bills", value: 180 },
-              { name: "Shopping", value: 160 },
-              { name: "Other", value: 158 },
-            ]}
-          />
+                <SpendingByCategoryChart
+                  data={[
+                    { name: "Food", value: 550 },
+                    { name: "Transport", value: 200 },
+                    { name: "Bills", value: 180 },
+                    { name: "Shopping", value: 160 },
+                    { name: "Other", value: 158 },
+                  ]}
+                />
               </div>
             </div>
           </div>
