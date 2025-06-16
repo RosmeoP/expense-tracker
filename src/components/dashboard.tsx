@@ -87,7 +87,7 @@ const Dashboard = () => {
             thisMonth={2000}
           />
           <div className="flex flex-col gap-2">
-            <div className="flex flex-row gap-4 w-full">
+            <div className="flex flex-col sm:flex-row gap-4 w-full">
               <div className="flex-1">
                 <SpendingByCategoryChart
                   data={[
