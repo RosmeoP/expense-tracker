@@ -27,7 +27,7 @@ const FinancialOverview: React.FC<FinancialOverviewProps> = ({
   onViewReports,
   onAddExpense,
 }) => (
-  <section className="mx-auto my-8 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 sm:p-10 flex items-start gap-6 border border-gray-200 max-w-full sm:max-w-7xl">
+  <section className="mx-auto my-8 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl shadow-lg p-4 sm:p-6 flex items-start gap-4 border border-gray-200 max-w-full sm:max-w-7xl">
     {/* Left Icon */}
     <div className="hidden xs:flex flex-col items-center justify-center mr-4 mt-2">
       <FiGrid className="text-3xl text-gray-500" />

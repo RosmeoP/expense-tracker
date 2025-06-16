@@ -59,7 +59,7 @@ const SideBar = () => {
             {/* Log Out Button */}
             <button
               onClick={handleLogout}
-              className="flex items-center gap-4 px-4 py-3 m-4 rounded-lg text-red-500   bg-[#c6c8d9] transition duration-200  hover:scale-105 active:scale-95"
+              className="flex items-center gap-4 px-4 py-3 m-4 rounded-lg text-red-500 rounded-2xl hover:border-red-700 transition duration-200  hover:scale-105 active:scale-95"
             >
               <span className="text-xl">
                 <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

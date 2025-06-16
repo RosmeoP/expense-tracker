@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SideBar from "../components/sideBar";
 import FinancialOverview from "./FinancialOverview";
+import BudgetSummaryCards from "./BudgetSummaryCards";
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
@@ -65,15 +66,25 @@ const Dashboard = () => {
       </aside>
       <main className="flex-1 ml-64 min-h-screen flex flex-col bg-white items-center justify-start">
         <div className="flex-1 min-h-0 w-full flex flex-col items-center">
-          <FinancialOverview
-            savingsRate={20}
-            budgetHealth={75}
-            nextBill={{ daysLeft: 5, amount: 50, name: "Electricity Bill", dueDate: "2024-07-10" }}
-            growth={5}
-            onViewReports={() => navigate("/reports")}
-            onAddExpense={() => navigate("/transactions/add")}
-            alerts={["Check your spending on dining out", "Review your subscriptions"]}
-          />
+          <div className="flex flex-col flex-1">
+            <h1 className="text-2xl font-bold mt-8 mb-6 ml-8">Expense Tracker</h1>
+            <div className="mx-auto w-full max-w-4xl flex flex-col gap-3">
+              <FinancialOverview
+                savingsRate={23}
+                budgetHealth={90}
+                nextBill={{ name: "Internet", amount: 50, dueDate: "2025-06-20", daysLeft: 2 }}
+                alerts={["Budget exceeded"]}
+                growth={15}
+                onViewReports={() => {}}
+                onAddExpense={() => {}}
+              />
+              <BudgetSummaryCards
+                totalSpent={1248}
+                remainingBudget={752}
+                thisMonth={2000}
+              />
+            </div>
+          </div>
         </div>
       </main>
     </div>
