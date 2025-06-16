@@ -4,6 +4,7 @@ import axios from "axios";
 import SideBar from "../components/sideBar";
 import FinancialOverview from "./FinancialOverview";
 import BudgetSummaryCards from "./BudgetSummaryCards";
+import SpendingByCategoryChart from "./SpendingByCategoryChart";
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
@@ -83,6 +84,27 @@ const Dashboard = () => {
                 remainingBudget={752}
                 thisMonth={2000}
               />
+            </div>
+            <div className="flex gap-4">
+              <SpendingByCategoryChart
+                data={[
+                  { name: "Food", value: 550, color: "#60a5fa" },
+                  { name: "Transport", value: 200, color: "#fbbf24" },
+                  { name: "Bills", value: 180, color: "#34d399" },
+                  { name: "Shopping", value: 160, color: "#f472b6" },
+                  { name: "Other", value: 158, color: "#a78bfa" },
+                ]}
+              />
+              <SpendingByCategoryChart
+                data={[
+                  { name: "Food", value: 550, color: "#60a5fa" },
+                  { name: "Transport", value: 200, color: "#fbbf24" },
+                  { name: "Bills", value: 180, color: "#34d399" },
+                  { name: "Shopping", value: 160, color: "#f472b6" },
+                  { name: "Other", value: 158, color: "#a78bfa" },
+                ]}
+              />
+              {/* <AnotherComponent /> */}
             </div>
           </div>
         </div>
