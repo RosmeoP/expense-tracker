@@ -11,7 +11,7 @@ const BudgetSummaryCards: React.FC<BudgetSummaryCardsProps> = ({
   remainingBudget,
   thisMonth,
 }) => (
-  <div className="mx-auto mt-2 max-w-full sm:max-w-7xl w-full">
+  <div className="mx-auto mt-1 max-w-full sm:max-w-7xl w-full">
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       {/* Total Spent */}
       <div className="bg-white rounded-2xl border border-gray-100 p-6 flex items-center shadow-md hover:shadow-lg transition-shadow duration-200 group">

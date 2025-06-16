@@ -27,7 +27,7 @@ const FinancialOverview: React.FC<FinancialOverviewProps> = ({
   onViewReports,
   onAddExpense,
 }) => (
-  <section className="mx-auto my-8 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl shadow-lg p-4 sm:p-6 flex items-start gap-4 border border-gray-200 max-w-full sm:max-w-7xl">
+  <section className="mx-auto my-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl shadow-lg p-3 sm:p-4 flex items-start gap-4 border border-gray-200 max-w-full sm:max-w-7xl">
     {/* Left Icon */}
     <div className="hidden xs:flex flex-col items-center justify-center mr-4 mt-2">
       <FiGrid className="text-3xl text-gray-500" />
@@ -50,7 +50,7 @@ const FinancialOverview: React.FC<FinancialOverviewProps> = ({
       {/* Stat Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mt-8">
         {/* Savings Rate */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col shadow-md hover:shadow-xl transition-shadow hover:-translate-y-1 duration-200 group">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow hover:shadow-lg transition-shadow duration-200">
           <div className="flex items-center gap-3 mb-2">
             <span className="bg-green-100 rounded-full p-2">
               <FiTrendingUp className="text-2xl text-green-600" />
@@ -61,7 +61,7 @@ const FinancialOverview: React.FC<FinancialOverviewProps> = ({
           <span className="text-2xl font-extrabold text-green-700 group-hover:text-green-800 transition">{savingsRate}%</span>
         </div>
         {/* Budget Health */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col shadow-md hover:shadow-xl transition-shadow hover:-translate-y-1 duration-200 group">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow hover:shadow-lg transition-shadow duration-200">
           <div className="flex items-center gap-3 mb-2">
             <span className="bg-blue-100 rounded-full p-2">
               <FiPieChart className="text-2xl text-blue-600" />
@@ -72,7 +72,7 @@ const FinancialOverview: React.FC<FinancialOverviewProps> = ({
           <span className="text-2xl font-extrabold text-blue-700 group-hover:text-blue-800 transition">{budgetHealth}%</span>
         </div>
         {/* Next Bill */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col shadow-md hover:shadow-xl transition-shadow hover:-translate-y-1 duration-200 group">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow hover:shadow-lg transition-shadow duration-200">
           <div className="flex items-center gap-3 mb-2">
             <span className="bg-orange-100 rounded-full p-2">
               <FiCalendar className="text-2xl text-orange-600" />
@@ -85,7 +85,7 @@ const FinancialOverview: React.FC<FinancialOverviewProps> = ({
           </span>
         </div>
         {/* Alerts */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 flex flex-col shadow-md hover:shadow-xl transition-shadow hover:-translate-y-1 duration-200 group">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow hover:shadow-lg transition-shadow duration-200">
           <div className="flex items-center gap-3 mb-2">
             <span className="bg-red-100 rounded-full p-2">
               <FiAlertCircle className="text-2xl text-red-500" />

@@ -23,12 +23,12 @@ type SpendingByCategoryChartProps = {
 };
 
 const SpendingByCategoryChart: React.FC<SpendingByCategoryChartProps> = ({ data }) => (
-  <Card className="w-full max-w-full sm:max-w-md mt-6 border border-gray-200 mx-auto">
+  <Card className="w-full max-w-full sm:max-w-md mt-2 mb-8 border border-gray-200 mx-auto">
     <CardHeader className="pb-2">
       <CardTitle className="text-sm font-semibold">Spending by Category</CardTitle>
     </CardHeader>
     <CardContent className="flex flex-col items-center pt-0">
-      <div className="w-full h-48 sm:h-56 xs:h-40">
+      <div className="w-full h-24 sm:h-28 xs:h-20">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
