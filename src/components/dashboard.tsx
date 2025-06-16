@@ -5,6 +5,7 @@ import SideBar from "../components/sideBar";
 import FinancialOverview from "./FinancialOverview";
 import BudgetSummaryCards from "./BudgetSummaryCards";
 import SpendingByCategoryChart from "./SpendingByCategoryChart";
+import RecentExpenses from "./RecentExpenses";
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
@@ -101,15 +102,19 @@ const Dashboard = () => {
               </div>
               <div className="flex-1">
                 {/* Replace with your new component */}
-                <SpendingByCategoryChart
-                  data={[
-                    { name: "Food", value: 550 },
-                    { name: "Transport", value: 200 },
-                    { name: "Bills", value: 180 },
-                    { name: "Shopping", value: 160 },
-                    { name: "Other", value: 158 },
-                  ]}
-                />
+               <RecentExpenses expenses={[
+                { id: "1", description: "Groceries", amount: 45.2, date: "2025-06-15" },
+                { id: "2", description: "Coffee", amount: 3.5, date: "2025-06-14" },
+                { id: "3", description: "Transport", amount: 12.0, date: "2025-06-13" },
+                { id: "4", description: "Utilities", amount: 120.0, date: "2025-06-12" },
+                { id: "5", description: "Dining Out", amount: 60.0, date: "2025-06-11" },
+                { id: "6", description: "Shopping", amount: 200.0, date: "2025-06-10" },
+                { id: "7", description: "Gym Membership", amount: 30.0, date: "2025-06-09" },
+                { id: "8", description: "Internet Bill", amount: 50.0, date: "2025-06-08" },
+                { id: "9", description: "Phone Bill", amount: 40.0, date: "2025-06-07" },
+                { id: "10", description: "Car Maintenance", amount: 150.0, date: "2025-06-06" },
+                // ...more
+              ]} />
               </div>
             </div>
           </div>
