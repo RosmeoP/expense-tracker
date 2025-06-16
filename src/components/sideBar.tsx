@@ -15,7 +15,7 @@ const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
   { href: "/transactions", label: "Transactions", icon: ScanLine },
   { href: "/budgets", label: "Budgets", icon: Wallet },
-  { href: "/reports", label: "Reports", icon: ChartPie},
+  { href: "/reports", label: "Reports", icon: ChartPie },
   { href: "/goals", label: "Goals", icon: Trophy },
   { href: "/settings", label: "Settings", icon: Settings }
 ];
@@ -86,15 +86,15 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
       <AnimatePresence>
         <motion.nav
           key="mobile-nav"
-          initial={{ y: 80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 80, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[95vw] max-w-md rounded-2xl bg-white/80 shadow-2xl border border-gray-200 flex justify-between gap-x-2 px-4 py-2 backdrop-blur-lg"
+          variants={mobileNavVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[95vw] max-w-md rounded-2xl shadow-2xl border border-gray-200 flex justify-between gap-x-2 px-4 py-2 backdrop-blur-lg"
           role="navigation"
           aria-label="Mobile Navigation"
         >
-          {NAV_ITEMS.map(item => {
+          {NAV_ITEMS.slice(0, 5).map(item => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
             return (
@@ -109,11 +109,11 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
                 }`}
               >
                 <motion.span
-                  animate={isActive ? { scale: 1.2 } : { scale: 1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  animate={isActive ? { scale: 1.25, y: -6, filter: "drop-shadow(0 0 8px #3b82f6)" } : { scale: 1, y: 0, filter: "none" }}
+                  transition={{ type: "spring", stiffness: 500, damping: 20 }}
                   className="mb-0.5"
                 >
-                  <Icon size={24} />
+                  <Icon size={26} />
                 </motion.span>
                 <span className="text-[11px]">{item.label}</span>
               </Link>
@@ -123,6 +123,36 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
       </AnimatePresence>
     </>
   );
+};
+
+import type { Variants } from "framer-motion";
+
+const mobileNavVariants: Variants = {
+  hidden: { 
+    y: 80, 
+    opacity: 0, 
+    filter: "blur(12px)", 
+    background: "rgba(255,255,255,0.2)" 
+  },
+  visible: { 
+    y: 0, 
+    opacity: 1, 
+    filter: "blur(0px)", 
+    background: "rgba(255,255,255,0.7)",
+    transition: { 
+      y: { type: "spring" as const, stiffness: 400, damping: 28 },
+      opacity: { duration: 0.25 },
+      filter: { duration: 0.3 },
+      background: { duration: 0.3 }
+    }
+  },
+  exit: { 
+    y: 80, 
+    opacity: 0, 
+    filter: "blur(12px)", 
+    background: "rgba(255,255,255,0.2)",
+    transition: { duration: 0.25 }
+  }
 };
 
 const SidebarSection = ({ title, children }: { title: string; children: React.ReactNode }) => (

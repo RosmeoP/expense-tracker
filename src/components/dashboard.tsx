@@ -16,7 +16,7 @@ const refreshToken = async () => {
 };
 
 const Dashboard = () => {
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  const [, setUser] = useState<{ name: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
