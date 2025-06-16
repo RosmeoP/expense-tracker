@@ -60,20 +60,24 @@ const SpendingByCategoryChart: React.FC<SpendingByCategoryChartProps> = ({ data 
         </ResponsiveContainer>
       </div>
       {/* Legend under the chart */}
-      <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 w-full">
+      <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 w-full sm:flex-row flex-col items-center">
         {data.map((entry, idx) => (
-          <div key={entry.name} className="flex items-center gap-2">
+          <div
+            key={entry.name}
+            className="flex items-center gap-1 sm:gap-2 mb-1 sm:mb-0 text-[13px] sm:text-[15px] font-medium"
+            style={{ minWidth: 90 }}
+          >
             <span
-              className="inline-block w-3 h-3 rounded-full"
-              style={{ backgroundColor: CHART_COLORS[idx % CHART_COLORS.length] }}
+              className="inline-block rounded-full"
+              style={{
+                backgroundColor: entry.color || CHART_COLORS[idx % CHART_COLORS.length],
+                width: 12,
+                height: 12,
+                marginRight: 6,
+              }}
             />
-            <span
-              className="text-xs font-medium"
-              style={{ color: CHART_COLORS[idx % CHART_COLORS.length] }}
-            >
-              {entry.name}
-            </span>
-            <span className="text-xs text-gray-700 font-semibold">${entry.value}</span>
+            <span className="whitespace-nowrap">{entry.name}</span>
+            <span className="ml-1 text-gray-700 font-semibold">${entry.value}</span>
           </div>
         ))}
       </div>

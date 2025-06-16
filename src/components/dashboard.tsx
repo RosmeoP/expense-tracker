@@ -71,36 +71,32 @@ const Dashboard = () => {
       {/* Main content */}
       <main className="flex-1 md:ml-64 min-h-screen flex flex-col bg-white items-center justify-start">
         <div className="flex-1 min-h-0 w-full flex flex-col items-center">
-          <div className="flex flex-col flex-1">
-            <h1 className="text-2xl font-bold mt-8 mb-6 ml-8">Expense Tracker</h1>
-            <div className="w-full max-w-full sm:max-w-4xl mx-auto px-2">
-              <FinancialOverview
-                savingsRate={23}
-                budgetHealth={90}
-                nextBill={{ name: "Internet", amount: 50, dueDate: "2025-06-20", daysLeft: 2 }}
-                alerts={["Budget exceeded"]}
-                growth={15}
-                onViewReports={() => {}}
-                onAddExpense={() => {}}
-              />
-              <BudgetSummaryCards
-                totalSpent={1248}
-                remainingBudget={752}
-                thisMonth={2000}
-              />
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 w-full max-w-4xl mx-auto">
-              <SpendingByCategoryChart
-                data={[
-                  { name: "Food", value: 550 },
-                  { name: "Transport", value: 200 },
-                  { name: "Bills", value: 180 },
-                  { name: "Shopping", value: 160 },
-                  { name: "Other", value: 158 },
-                ]}
-              />
-              {/* Otro componente aquí */}
-            </div>
+          <div className="flex flex-col flex-1 w-full max-w-3xl mx-auto px-2">
+            <h1 className="text-2xl font-bold mt-8 mb-6 ml-2">Expense Tracker</h1>
+            <FinancialOverview
+              savingsRate={23}
+              budgetHealth={90}
+              nextBill={{ name: "Internet", amount: 50, dueDate: "2025-06-20", daysLeft: 2 }}
+              alerts={["Budget exceeded"]}
+              growth={15}
+              onViewReports={() => {}}
+              onAddExpense={() => {}}
+            />
+            <BudgetSummaryCards
+              totalSpent={1248}
+              remainingBudget={752}
+              thisMonth={2000}
+            />
+            <SpendingByCategoryChart
+              data={[
+                { name: "Food", value: 550 },
+                { name: "Transport", value: 200 },
+                { name: "Bills", value: 180 },
+                { name: "Shopping", value: 160 },
+                { name: "Other", value: 158 },
+              ]}
+            />
+            {/* Otro componente aquí */}
           </div>
         </div>
       </main>
