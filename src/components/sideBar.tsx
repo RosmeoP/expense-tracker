@@ -38,7 +38,7 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
       {!mobileOnly && (
         <TooltipProvider>
           <aside
-            className="hidden md:flex h-screen w-56 bg-white text-red-200 flex-col shadow-lg"
+            className="hidden md:flex h-screen w-64 bg-white text-red-200 flex-col shadow-lg"
             role="navigation"
             aria-label="Sidebar"
           >

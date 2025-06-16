@@ -61,43 +61,40 @@ const Dashboard = () => {
   if (error) return <div className="text-center text-red-600 mt-20">{error}</div>;
 
   return (
-    <div className="min-h-screen flex bg-white overflow-hidden">
-      {/* Desktop Sidebar */}
+    <div className="min-h-screen bg-white relative">
+      {/* Sidebar absolutely positioned */}
       <aside className="hidden md:block w-64 min-h-screen fixed left-0 top-0 bottom-0 z-20">
         <SideBar />
       </aside>
       {/* Mobile Bottom Navigation */}
       <SideBar mobileOnly />
       {/* Main content */}
-      <main className="flex-1 md:ml-64 min-h-screen flex flex-col bg-white items-center justify-start">
-        <div className="flex-1 min-h-0 w-full flex flex-col items-center">
-          <div className="flex flex-col flex-1 w-full max-w-3xl mx-auto px-2">
-            <h1 className="text-2xl font-bold mt-8 mb-6 ml-2">Expense Tracker</h1>
-            <FinancialOverview
-              savingsRate={23}
-              budgetHealth={90}
-              nextBill={{ name: "Internet", amount: 50, dueDate: "2025-06-20", daysLeft: 2 }}
-              alerts={["Budget exceeded"]}
-              growth={15}
-              onViewReports={() => {}}
-              onAddExpense={() => {}}
-            />
-            <BudgetSummaryCards
-              totalSpent={1248}
-              remainingBudget={752}
-              thisMonth={2000}
-            />
-            <SpendingByCategoryChart
-              data={[
-                { name: "Food", value: 550 },
-                { name: "Transport", value: 200 },
-                { name: "Bills", value: 180 },
-                { name: "Shopping", value: 160 },
-                { name: "Other", value: 158 },
-              ]}
-            />
-            {/* Otro componente aquí */}
-          </div>
+      <main className="flex flex-col items-center justify-start min-h-screen">
+        <div className="w-full max-w-3xl mx-auto px-4 flex flex-col">
+          <h1 className="text-2xl font-bold mt-8 mb-6 text-center">Expense Tracker</h1>
+          <FinancialOverview
+            savingsRate={23}
+            budgetHealth={90}
+            nextBill={{ name: "Internet", amount: 50, dueDate: "2025-06-20", daysLeft: 2 }}
+            alerts={["Budget exceeded"]}
+            growth={15}
+            onViewReports={() => {}}
+            onAddExpense={() => {}}
+          />
+          <BudgetSummaryCards
+            totalSpent={1248}
+            remainingBudget={752}
+            thisMonth={2000}
+          />
+          <SpendingByCategoryChart
+            data={[
+              { name: "Food", value: 550 },
+              { name: "Transport", value: 200 },
+              { name: "Bills", value: 180 },
+              { name: "Shopping", value: 160 },
+              { name: "Other", value: 158 },
+            ]}
+          />
         </div>
       </main>
     </div>
