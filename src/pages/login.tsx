@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authService';
+import dashboardImg from '../assets/login.png'
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -118,36 +119,26 @@ const Login = () => {
           </form>
         </div>
         {/* Right: Welcome Panel */}
-        <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-blue-50 text-gray-900 px-12 py-10 border-l border-gray-200">
+        <div className="hidden md:flex flex-col w-1/2 bg-blue-50 text-gray-900 border-l border-gray-200">
+        {/* Text content section */}
+        <div className="px-12 py-10 flex-shrink-0">
           <h2 className="text-4xl font-bold mb-4 text-center text-blue-600">Welcome back!</h2>
           <p className="text-xl font-semibold mb-4 text-center text-gray-400">Please sign in to your Expense Tracker account</p>
-          <p className="text-center text-gray-400 mb-10">
+          <p className="text-center text-gray-400">
             Track your expenses, analyze your spending, and reach your financial goals.
           </p>
-          {/* Placeholder for chart/graphic */}
-          <div className="w-full flex flex-col items-center">
-            <div className="bg-white rounded-xl p-6 w-72 shadow-md mb-6 border border-blue-100">
-              <div className="text-blue-600 font-bold text-base mb-3">Monthly Report</div>
-              <div className="flex items-end gap-1 h-24">
-                <div className="bg-blue-100 w-4 h-8 rounded"></div>
-                <div className="bg-blue-200 w-4 h-14 rounded"></div>
-                <div className="bg-blue-300 w-4 h-12 rounded"></div>
-                <div className="bg-blue-400 w-4 h-20 rounded"></div>
-                <div className="bg-blue-300 w-4 h-12 rounded"></div>
-                <div className="bg-blue-200 w-4 h-16 rounded"></div>
-                <div className="bg-blue-100 w-4 h-8 rounded"></div>
-              </div>
-              <div className="flex justify-between text-sm text-blue-300 mt-3">
-                <span>Jan</span>
-                <span>Jul</span>
-              </div>
-            </div>
-            <div className="bg-white rounded-xl p-4 w-40 shadow text-center border border-blue-100">
-              <div className="text-blue-600 font-bold text-2xl">72%</div>
-              <div className="text-sm text-blue-400">Budget Used</div>
-            </div>
-          </div>
         </div>
+        
+        {/* Image section - takes remaining space */}
+        <div className="flex-1 p-6">
+          <img
+      src={dashboardImg}
+      alt="Dashboard Preview"
+      className="w-full h-full object-cover rounded-xl shadow-xl"
+      style={{ objectPosition: '70% center' }}
+    />
+        </div>
+      </div>
       </div>
     </div>
   );
