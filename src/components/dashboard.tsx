@@ -7,7 +7,6 @@ import BudgetSummaryCards from "./BudgetSummaryCards";
 import SpendingByCategoryChart from "./SpendingByCategoryChart";
 import RecentExpenses from "./RecentExpenses";
 
-// Get API URL from environment
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const refreshToken = async () => {
@@ -28,26 +27,17 @@ const Dashboard = () => {
 
   const fetchUserProfile = useCallback(async (token: string) => {
     try {
-      console.log('🔍 Fetching user profile...');
-      
-      // FIXED: Use correct endpoint /auth/profile instead of /api/profile
       const response = await axios.get(`${API_URL}/auth/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
-      console.log('✅ User profile fetched:', response.data.user);
       setUser(response.data.user);
     } catch (err: any) {
-      console.error('❌ Profile fetch error:', err.response?.status, err.message);
-      
       if (err.response?.status === 401) {
-        console.log('🔄 Token expired, trying to refresh...');
         try {
           const refreshed = await refreshToken();
-          console.log('✅ Token refreshed, retrying profile fetch...');
           await fetchUserProfile(refreshed.accessToken);
         } catch (refreshError) {
-          console.error('❌ Token refresh failed:', refreshError);
           setError("Session expired. Please log in again.");
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
@@ -63,33 +53,28 @@ const Dashboard = () => {
   }, [navigate]);
 
   useEffect(() => {
-    console.log('🚀 Dashboard mounted, checking authentication...');
-    
     // First, try to get user from localStorage (from Google OAuth)
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       try {
         const userData = JSON.parse(storedUser);
-        console.log('✅ User found in localStorage:', userData.name);
         setUser(userData);
         setLoading(false);
-        return; // Don't need to fetch profile if we have user data
+        return;
       } catch (e) {
-        console.warn('⚠️ Failed to parse stored user data');
+        // Continue to token-based fetch if parsing fails
       }
     }
     
     // If no stored user data, try to fetch with token
     const token = localStorage.getItem("accessToken");
     if (!token) {
-      console.log('❌ No token found, redirecting to login...');
       setError("No token found, please log in again.");
       setLoading(false);
       navigate("/login");
       return;
     }
     
-    console.log('🔍 Token found, fetching user profile...');
     fetchUserProfile(token);
   }, [fetchUserProfile, navigate]);
 
@@ -139,7 +124,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Sidebar absolutely positioned */}
+      {/* Sidebar */}
       <aside className="hidden md:block w-64 h-screen fixed left-0 top-0 bottom-0 z-20">
         <SideBar />
       </aside>

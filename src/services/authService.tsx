@@ -1,115 +1,157 @@
+// authService.tsx
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api';  
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-const isTokenExpired = (token: string) => {
-  const payload = JSON.parse(atob(token.split('.')[1]));  
-  const expiry = payload.exp * 1000; 
-  return expiry < Date.now(); 
-};
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-export const registerUser = async (email: string, password: string, name: string) => {
-  try {
-    const response = await axios.post(`${API_URL}/register`, { email, password, name }, { withCredentials: true });
-    
-    if (response.data.token) {
-      localStorage.setItem('accessToken', response.data.token);  
+// Add request interceptor to include auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 400 || error.response?.status === 409) {
-        console.error('Registration error:', error.response?.data);
-        throw new Error('Email already in use. Please try another one.');
-      }
-      console.error('General registration error:', error.response?.data);
-      throw new Error(error.response?.data?.message || 'Error during sign-up');
-    }
-    console.error('Error during registration:', error);
-    throw new Error('Error during sign-up');
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-};
+);
 
+// Add response interceptor to handle token refresh
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-// Login user function
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken) {
+          const response = await axios.post(`${API_URL}/auth/refresh-token`, {
+            refreshToken,
+          });
+
+          const { accessToken, refreshToken: newRefreshToken } = response.data;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', newRefreshToken);
+
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          return api(originalRequest);
+        }
+      } catch (refreshError) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// Login with email and password
 export const loginUser = async (email: string, password: string) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, {email, password });
-
-    if (response && response.data && response.data.accessToken && response.data.refreshToken) {
-      localStorage.setItem('accessToken', response.data.accessToken);  
-      localStorage.setItem('refreshToken', response.data.refreshToken);  
-      return response.data;  
-    } else {
-      console.error('Login response is missing access or refresh token:', response.data);
-      throw new Error('Login failed: Missing tokens in response');
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Login failed:', error.response?.data || error.message);  
-      throw new Error(error.response?.data?.message || 'Login failed');  
-    } else {
-      console.error('Login failed:', (error as any).message || error);  
-      throw new Error('Login failed');  
-    }
-  }
-};
-
-// Refresh token function
-export const refreshToken = async () => {
-  const refreshToken = localStorage.getItem('refreshToken');
-  if (!refreshToken) {
-    throw new Error('Refresh token is missing');
-  }
-
-  try {
-    console.log('Refreshing token...'); 
-    const response = await axios.post(
-      `${API_URL}/refresh-token`,
-      { refreshToken },
-      { withCredentials: true }
-    );
-    // Store new tokens
-    localStorage.setItem('accessToken', response.data.accessToken);
-    localStorage.setItem('refreshToken', response.data.refreshToken);
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || 'Error refreshing token');
-    }
-    throw new Error('Error refreshing token');
-  }
-};
-
-export const fetchProfile = async () => {
-  let accessToken = localStorage.getItem('accessToken');
-  if (!accessToken) {
-    throw new Error('Access token is missing');
-  }
-
-  const tokenExpired = isTokenExpired(accessToken);
-  if (tokenExpired) {
-    console.log("Access token expired, refreshing...");
-    const tokens = await refreshToken();  
-    accessToken = tokens.accessToken;
-  }
-
-  try {
-    const response = await axios.get(`${API_URL}/profile`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
+    const response = await api.post('/auth/login', {
+      email: email.trim().toLowerCase(),
+      password,
     });
-    console.log("Profile Response:", response.data); 
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching profile:", error);  
 
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || 'Error fetching profile');
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
+    } else if (error.response?.status === 400) {
+      throw new Error('Invalid email or password');
+    } else if (error.response?.status === 500) {
+      throw new Error('Server error. Please try again later.');
+    } else if (error.code === 'NETWORK_ERROR' || !error.response) {
+      throw new Error('Network error. Please check your connection.');
+    } else {
+      throw new Error('Login failed. Please try again.');
     }
-    throw new Error('Error fetching profile');
   }
+};
+
+export const registerUser = async (name: string, email: string, password: string) => {
+  try {
+    const response = await api.post('/auth/register', {
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      password,
+    });
+
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
+    } else if (error.response?.status === 400) {
+      throw new Error('Registration failed. Please check your information.');
+    } else {
+      throw new Error('Registration failed. Please try again.');
+    }
+  }
+};
+
+// Get user profile
+export const getUserProfile = async () => {
+  try {
+    const response = await api.get('/auth/profile');
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (refreshToken) {
+      await api.post('/auth/logout', { refreshToken });
+    }
+  } catch (error) {
+  } finally {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
+  }
+};
+
+// Check if user is authenticated
+export const isAuthenticated = () => {
+  const token = localStorage.getItem('accessToken');
+  const user = localStorage.getItem('user');
+  return !!(token && user);
+};
+
+export const getCurrentUser = () => {
+  const userStr = localStorage.getItem('user');
+  if (userStr) {
+    try {
+      return JSON.parse(userStr);
+    } catch (error) {
+      return null;
+    }
+  }
+  return null;
+};
+
+export default {
+  loginUser,
+  registerUser,
+  getUserProfile,
+  logoutUser,
+  isAuthenticated,
+  getCurrentUser,
 };

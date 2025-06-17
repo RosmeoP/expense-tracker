@@ -1,28 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authService';
 import dashboardImg from '../assets/login.png'
 
 const Login = () => {
-  console.log('Login component rendering...'); // Debug log
-  
-  // Test if router context is available
-  let navigate;
-  let location;
-  
-  try {
-    navigate = useNavigate();
-    location = useLocation();
-    console.log('✅ Router context available, current path:', location.pathname);
-  } catch (error) {
-    console.error('❌ Router context error:', error);
-    // Fallback navigation function
-    navigate = (path: string) => {
-      console.log('Using fallback navigation to:', path);
-      window.location.href = path;
-    };
-  }
-
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -31,45 +13,32 @@ const Login = () => {
   const [showGooglePrompt, setShowGooglePrompt] = useState(false);
 
   useEffect(() => {
-    console.log('Login useEffect running...'); // Debug log
-    
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
     const refreshToken = params.get('refreshToken');
     const error = params.get('error');
     
-    console.log('URL params:', { token: !!token, refreshToken: !!refreshToken, error });
-    
     if (error) {
       setError(decodeURIComponent(error));
       setIsGoogleLoading(false);
-      // Clean up URL
       window.history.replaceState({}, document.title, window.location.pathname);
     } else if (token) {
-      console.log('✅ Token received, processing...');
-      
-      // Save tokens
       localStorage.setItem('accessToken', token);
       if (refreshToken) {
         localStorage.setItem('refreshToken', refreshToken);
       }
       
-      // Save user info if provided
       const userInfo = params.get('user');
       if (userInfo) {
         try {
           const user = JSON.parse(decodeURIComponent(userInfo));
           localStorage.setItem('user', JSON.stringify(user));
-          console.log('✅ User info saved:', user.name);
         } catch (e) {
           console.error('Error parsing user info:', e);
         }
       }
       
-      // Clean up URL and navigate
       window.history.replaceState({}, document.title, window.location.pathname);
-      
-      console.log('🚀 Navigating to dashboard...');
       navigate('/dashboard');
     }
   }, [navigate]);
@@ -80,25 +49,19 @@ const Login = () => {
     setShowGooglePrompt(false);
     
     try {
-      console.log('Attempting login...');
       const response = await loginUser(email, password);
       
-      // Save tokens
       localStorage.setItem('accessToken', response.accessToken);
       if (response.refreshToken) {
         localStorage.setItem('refreshToken', response.refreshToken);
       }
       
-      // Save user info
       if (response.user) {
         localStorage.setItem('user', JSON.stringify(response.user));
       }
       
-      console.log('✅ Login successful, navigating to dashboard...');
       navigate('/dashboard');
     } catch (error: any) {
-      console.error('Login error:', error);
-      
       if (error.response?.data?.useGoogleAuth) {
         setShowGooglePrompt(true);
         setError('This account uses Google Sign-In. Please use the Google button below.');
@@ -109,20 +72,14 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    console.log('🔐 Starting Google OAuth...');
     setIsGoogleLoading(true);
     setError(null);
     setShowGooglePrompt(false);
     
-    // Store the current page to return to after login if needed
     sessionStorage.setItem('returnTo', window.location.pathname);
     
-    // Redirect to Google OAuth
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-    const googleUrl = `${apiUrl}/auth/google`;
-    console.log('🌐 Redirecting to:', googleUrl);
-    
-    window.location.href = googleUrl;
+    window.location.href = `${apiUrl}/auth/google`;
   };
 
   return (
