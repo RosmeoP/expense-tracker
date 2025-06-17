@@ -1,4 +1,3 @@
-// authService.tsx
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
@@ -10,7 +9,6 @@ const api = axios.create({
   },
 });
 
-// Add request interceptor to include auth token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('accessToken');
@@ -24,7 +22,6 @@ api.interceptors.request.use(
   }
 );
 
-// Add response interceptor to handle token refresh
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -104,7 +101,39 @@ export const registerUser = async (name: string, email: string, password: string
   }
 };
 
-// Get user profile
+export const verifyEmail = async (token: string) => {
+  try {
+    const response = await api.post('/auth/verify-email', { token });
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
+    } else {
+      throw new Error('Email verification failed. Please try again.');
+    }
+  }
+};
+
+// Resend verification email
+export const resendVerificationEmail = async (email: string) => {
+  try {
+    const response = await api.post('/auth/resend-verification', { 
+      email: email.trim().toLowerCase() 
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
+    } else if (error.response?.status === 429) {
+      throw new Error('Too many requests. Please wait before trying again.');
+    } else if (error.response?.status === 404) {
+      throw new Error('No account found with this email address.');
+    } else {
+      throw new Error('Failed to resend verification email. Please try again.');
+    }
+  }
+};
+
 export const getUserProfile = async () => {
   try {
     const response = await api.get('/auth/profile');
@@ -128,7 +157,6 @@ export const logoutUser = async () => {
   }
 };
 
-// Check if user is authenticated
 export const isAuthenticated = () => {
   const token = localStorage.getItem('accessToken');
   const user = localStorage.getItem('user');
@@ -147,11 +175,19 @@ export const getCurrentUser = () => {
   return null;
 };
 
+export const isEmailVerified = () => {
+  const user = getCurrentUser();
+  return user?.emailVerified || false;
+};
+
 export default {
   loginUser,
   registerUser,
+  verifyEmail,
+  resendVerificationEmail,
   getUserProfile,
   logoutUser,
   isAuthenticated,
   getCurrentUser,
+  isEmailVerified,
 };

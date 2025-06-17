@@ -11,6 +11,9 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [showGooglePrompt, setShowGooglePrompt] = useState(false);
+  const [showVerificationPrompt, setShowVerificationPrompt] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState('');
+  const [isResendingVerification, setIsResendingVerification] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -47,6 +50,7 @@ const Login = () => {
     e.preventDefault();
     setError(null);
     setShowGooglePrompt(false);
+    setShowVerificationPrompt(false);
     
     try {
       const response = await loginUser(email, password);
@@ -62,11 +66,17 @@ const Login = () => {
       
       navigate('/dashboard');
     } catch (error: any) {
-      if (error.response?.data?.useGoogleAuth) {
+      const errorData = error.response?.data;
+      
+      if (errorData?.useGoogleAuth) {
         setShowGooglePrompt(true);
         setError('This account uses Google Sign-In. Please use the Google button below.');
+      } else if (errorData?.requiresVerification) {
+        setShowVerificationPrompt(true);
+        setUnverifiedEmail(errorData.email || email);
+        setError('Please verify your email address before logging in. Check your inbox for the verification link.');
       } else {
-        setError(error.response?.data?.message || error.message || 'An unknown error occurred.');
+        setError(errorData?.message || error.message || 'An unknown error occurred.');
       }
     }
   };
@@ -75,11 +85,38 @@ const Login = () => {
     setIsGoogleLoading(true);
     setError(null);
     setShowGooglePrompt(false);
+    setShowVerificationPrompt(false);
     
     sessionStorage.setItem('returnTo', window.location.pathname);
     
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
     window.location.href = `${apiUrl}/auth/google`;
+  };
+
+  const handleResendVerification = async () => {
+    try {
+      setIsResendingVerification(true);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/auth/resend-verification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: unverifiedEmail }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setError('Verification email sent! Please check your inbox and spam folder.');
+        setShowVerificationPrompt(false);
+      } else {
+        setError(data.message || 'Failed to resend verification email.');
+      }
+    } catch (err: any) {
+      setError('Failed to resend verification email. Please try again.');
+    } finally {
+      setIsResendingVerification(false);
+    }
   };
 
   return (
@@ -97,13 +134,21 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className={`flex items-center justify-between ${
-                showGooglePrompt ? 'bg-blue-100 border-blue-300 text-blue-700' : 'bg-red-100 border-red-300 text-red-700'
+                showGooglePrompt 
+                  ? 'bg-blue-100 border-blue-300 text-blue-700' 
+                  : showVerificationPrompt
+                  ? 'bg-yellow-100 border-yellow-300 text-yellow-700'
+                  : 'bg-red-100 border-red-300 text-red-700'
               } px-4 py-3 rounded-lg mb-2 shadow animate-fade-in`}>
                 <div className="flex items-center gap-2">
                   {showGooglePrompt ? (
                     <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 16v-4m0-4h.01" />
+                    </svg>
+                  ) : showVerificationPrompt ? (
+                    <svg className="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 7.89a2 2 0 002.82 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   ) : (
                     <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -118,15 +163,51 @@ const Login = () => {
                   onClick={() => {
                     setError(null);
                     setShowGooglePrompt(false);
+                    setShowVerificationPrompt(false);
                   }}
                   className={`ml-4 ${
-                    showGooglePrompt ? 'text-blue-400 hover:text-blue-600' : 'text-red-400 hover:text-red-600'
+                    showGooglePrompt 
+                      ? 'text-blue-400 hover:text-blue-600' 
+                      : showVerificationPrompt
+                      ? 'text-yellow-400 hover:text-yellow-600'
+                      : 'text-red-400 hover:text-red-600'
                   } focus:outline-none`}
                   aria-label="Dismiss error"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
+                </button>
+              </div>
+            )}
+
+            {/* Verification Resend Button */}
+            {showVerificationPrompt && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 text-yellow-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a2 2 0 002.82 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span className="text-sm text-yellow-700">
+                      Email verification required for: <strong>{unverifiedEmail}</strong>
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResendVerification}
+                  disabled={isResendingVerification}
+                  className="mt-3 w-full bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                >
+                  {isResendingVerification ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Sending...
+                    </div>
+                  ) : (
+                    'Resend Verification Email'
+                  )}
                 </button>
               </div>
             )}

@@ -1,9 +1,11 @@
+// main.tsx - Updated with email verification route
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router, Routes, Route, Outlet, } from 'react-router-dom';
 import Login from './pages/login.tsx';
 import SignUp from './pages/signUp.tsx';
+import EmailVerification from './pages/EmailVerification.tsx'; // Add this import
 import Dashboard from './components/dashboard.tsx';
 import Transactions from './pages/Transactions.tsx';
 import Budgets from './pages/Budgets.tsx';
@@ -36,6 +38,9 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        
+        {/* Add email verification route */}
+        <Route path="/verify-email" element={<EmailVerification />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
@@ -45,7 +50,6 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/reports" element={<Reports />} />
             <Route path="/goals" element={<Goals />} />
             <Route path="/settings" element={<Settings />} />
-
           </Route>
         </Route>
       </Routes>

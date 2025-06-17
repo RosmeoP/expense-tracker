@@ -13,6 +13,8 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState('');
   const navigate = useNavigate();
 
   // Handle Google OAuth callback (same as login)
@@ -81,23 +83,27 @@ const SignUp = () => {
     setLoading(true);
 
     try {
-      // FIXED: Correct parameter order (name, email, password)
       const response = await registerUser(name.trim(), email.trim(), password);
       
-      // Save tokens and user data just like in login
-      localStorage.setItem('accessToken', response.accessToken);
-      if (response.refreshToken) {
-        localStorage.setItem('refreshToken', response.refreshToken);
+      // Check if response indicates verification is required
+      if (response.requiresVerification) {
+        setRegistrationSuccess(true);
+        setRegisteredEmail(response.email);
+      } else {
+        // If no verification required (shouldn't happen with new flow)
+        localStorage.setItem('accessToken', response.accessToken);
+        if (response.refreshToken) {
+          localStorage.setItem('refreshToken', response.refreshToken);
+        }
+        if (response.user) {
+          localStorage.setItem('user', JSON.stringify(response.user));
+        }
+        navigate('/dashboard');
       }
-      
-      if (response.user) {
-        localStorage.setItem('user', JSON.stringify(response.user));
-      }
-      
-      navigate('/dashboard');
     } catch (err: any) {
-      setLoading(false);
       setError({ general: err.message });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,6 +117,102 @@ const SignUp = () => {
     window.location.href = `${apiUrl}/auth/google`;
   };
 
+  const handleResendVerification = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/auth/resend-verification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: registeredEmail }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setError({ general: '' });
+        // Show success message (you could add a success state)
+        alert('Verification email sent! Please check your inbox.');
+      } else {
+        setError({ general: data.message });
+      }
+    } catch (err: any) {
+      setError({ general: 'Failed to resend verification email. Please try again.' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Show verification success screen
+  if (registrationSuccess) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-200 p-8">
+          <div className="text-center">
+            {/* Success Icon */}
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+              <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a2 2 0 002.82 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Check Your Email! 📧</h2>
+            
+            <p className="text-gray-600 mb-6">
+              We've sent a verification link to:
+            </p>
+            
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
+              <p className="font-medium text-blue-800">{registeredEmail}</p>
+            </div>
+
+            <div className="space-y-4 text-sm text-gray-600">
+              <p>📱 Check your inbox (and spam folder) for the verification email.</p>
+              <p>🔗 Click the verification link to activate your account.</p>
+              <p>⏰ The link will expire in 24 hours.</p>
+            </div>
+
+            <div className="mt-8 space-y-4">
+              <button
+                onClick={handleResendVerification}
+                disabled={loading}
+                className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Sending...
+                  </div>
+                ) : (
+                  'Resend Verification Email'
+                )}
+              </button>
+
+              <button
+                onClick={() => navigate('/login')}
+                className="w-full border border-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-50 transition"
+              >
+                Back to Login
+              </button>
+            </div>
+
+            {error.general && (
+              <div className="mt-4 bg-red-100 text-red-700 p-3 rounded-md text-sm">
+                {error.general}
+              </div>
+            )}
+
+            <p className="mt-6 text-xs text-gray-400">
+              Didn't receive the email? Check your spam folder or try resending.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Regular signup form
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="bg-white rounded-3xl shadow-2xl flex w-full max-w-4xl overflow-hidden border border-gray-200">
@@ -263,7 +365,7 @@ const SignUp = () => {
                   </svg>
                 ) : (
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.956 9.956 0 012.293-3.95M6.873 6.873A9.953 9.953 0 0112 5c4.477 0 8.268 2.943 9.542 7a9.956 9.956 0 01-4.293 5.95M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542 7a9.956 9.956 0 012.293-3.95M6.873 6.873A9.953 9.953 0 0112 5c4.477 0 8.268 2.943 9.542 7a9.956 9.956 0 01-4.293 5.95M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
                   </svg>
                 )}
@@ -295,10 +397,10 @@ const SignUp = () => {
             {loading ? (
               <div className="flex items-center justify-center gap-2">
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                Signing Up...
+                Creating Account...
               </div>
             ) : (
-              'Sign Up'
+              'Create Account'
             )}
           </button>
         </form>
