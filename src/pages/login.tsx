@@ -42,6 +42,7 @@ const Login = () => {
       }
       
       window.history.replaceState({}, document.title, window.location.pathname);
+      localStorage.setItem('loginTime', Date.now().toString());
       navigate('/dashboard');
     }
   }, [navigate]);

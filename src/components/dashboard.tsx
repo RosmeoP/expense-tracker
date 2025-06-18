@@ -82,14 +82,22 @@ const Dashboard = () => {
     fetchUserProfile(token);
   }, [fetchUserProfile, navigate]);
 
-  // Welcome message effect
+  // Welcome message effect - only show on fresh login
   useEffect(() => {
     if (user && !loading) {
-      setShowWelcome(true);
-      const timer = setTimeout(() => {
-        setShowWelcome(false);
-      }, 4000);
-      return () => clearTimeout(timer);
+      // Check if user just logged in (within last 5 seconds)
+      const loginTime = localStorage.getItem('loginTime');
+      const now = Date.now();
+      
+      if (loginTime && (now - parseInt(loginTime)) < 5000) {
+        setShowWelcome(true);
+        localStorage.removeItem('loginTime'); // Remove after showing
+        
+        const timer = setTimeout(() => {
+          setShowWelcome(false);
+        }, 4000);
+        return () => clearTimeout(timer);
+      }
     }
   }, [user, loading]);
 
@@ -129,28 +137,61 @@ const Dashboard = () => {
     <>
       {/* Welcome notification */}
       {user && showWelcome && (
-        <div className="fixed top-4 right-4 z-50 bg-gradient-to-r from-green-400 to-green-500 text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-500 transform animate-pulse">
-          <div className="flex items-center gap-3">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="font-medium">Welcome back, {user.name}! 🎉</span>
+        <div className="fixed top-6 right-6 z-50 bg-white/95 backdrop-blur-sm border border-green-200/50 shadow-2xl rounded-2xl p-5 transition-all duration-500 transform animate-in slide-in-from-right-5 hover:scale-105">
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 relative">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-ping"></div>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="text-base font-bold text-gray-900">Welcome back!</h3>
+                <span className="text-lg">🎉</span>
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Hey <span className="font-semibold text-indigo-600">{user.name}</span>, great to see you again!
+              </p>
+              <div className="mt-2 flex items-center gap-1">
+                <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-xs text-green-600 font-medium">You're all set</span>
+              </div>
+            </div>
             <button 
               onClick={() => setShowWelcome(false)}
-              className="ml-2 text-white hover:text-gray-200 font-bold text-lg leading-none"
+              className="flex-shrink-0 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200"
               aria-label="Close notification"
             >
-              ×
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
         </div>
       )}
 
-      <Layout 
-        title="Expense Tracker" 
-        subtitle={user ? `Welcome, ${user.name}` : undefined}
-      >
+      <Layout>
         <div className="space-y-6">
+          {/* Simplified Title Section */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-3">
+              Expense Tracker
+            </h1>
+            
+            {user && (
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200">
+                <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <p className="text-sm font-medium text-blue-700">
+                  Welcome, {user.name}
+                </p>
+              </div>
+            )}
+          </div>
           <FinancialOverview
             savingsRate={23}
             budgetHealth={90}

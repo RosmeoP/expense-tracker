@@ -59,7 +59,7 @@ const RecentExpenses: React.FC<RecentExpensesProps> = ({
   expenses,
   maxHeight = "240px",
 }) => (
-  <Card className="w-full max-w-full sm:max-w-md mt-2 mb-8 border border-gray-200 mx-auto shadow-lg">
+  <Card className="w-full h-[355px] border border-gray-200 shadow-lg">
     <CardHeader className="pb-0 bg-gradient-to-r from-blue-50 to-white rounded-t-xl shadow-sm">
       <CardTitle className="text-base font-semibold flex items-center gap-2 text-blue-900">
         <HiOutlineReceiptRefund className="text-blue-500 text-xl" />
