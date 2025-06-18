@@ -2,3 +2,37 @@
 @import "tw-animate-css";
 
 
+.sidebar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16rem; /* 256px */
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 30;
+}
+
+/* Main Content Offset */
+.content-offset {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .content-offset {
+    margin-left: 16rem; /* 256px - matches sidebar width */
+  }
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+}
+
+/* Prevent body scroll when mobile menu is open */
+.menu-open {
+  overflow: hidden;
+}
