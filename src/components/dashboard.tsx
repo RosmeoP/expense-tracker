@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import SideBar from "../components/sideBar";
+import Layout from "../components/Layout";
 import FinancialOverview from "./FinancialOverview";
 import BudgetSummaryCards from "./BudgetSummaryCards";
 import SpendingByCategoryChart from "./SpendingByCategoryChart";
@@ -20,9 +20,12 @@ const refreshToken = async () => {
 };
 
 const Dashboard = () => {
+  // All state declarations at the top
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showWelcome, setShowWelcome] = useState(false);
+  
   const navigate = useNavigate();
 
   const fetchUserProfile = useCallback(async (token: string) => {
@@ -52,6 +55,7 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
+  // User profile fetch effect
   useEffect(() => {
     // First, try to get user from localStorage (from Google OAuth)
     const storedUser = localStorage.getItem("user");
@@ -77,6 +81,17 @@ const Dashboard = () => {
     
     fetchUserProfile(token);
   }, [fetchUserProfile, navigate]);
+
+  // Welcome message effect
+  useEffect(() => {
+    if (user && !loading) {
+      setShowWelcome(true);
+      const timer = setTimeout(() => {
+        setShowWelcome(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [user, loading]);
 
   if (loading) {
     return (
@@ -111,76 +126,69 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
-      {/* Desktop Sidebar */}
-      <SideBar />
-      
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden md:ml-0">
-        {/* Welcome message for successful login */}
-        {user && (
-          <div className="fixed top-4 right-4 z-50 bg-green-100 border border-green-300 text-green-700 px-4 py-2 rounded-lg shadow-lg">
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>Welcome back, {user.name}! 🎉</span>
-            </div>
+    <>
+      {/* Welcome notification */}
+      {user && showWelcome && (
+        <div className="fixed top-4 right-4 z-50 bg-gradient-to-r from-green-400 to-green-500 text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-500 transform animate-pulse">
+          <div className="flex items-center gap-3">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="font-medium">Welcome back, {user.name}! 🎉</span>
+            <button 
+              onClick={() => setShowWelcome(false)}
+              className="ml-2 text-white hover:text-gray-200 font-bold text-lg leading-none"
+              aria-label="Close notification"
+            >
+              ×
+            </button>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Scrollable Content */}
-        <main className="flex-1 overflow-y-auto">
-          <div className="w-full max-w-4xl mx-auto px-4 py-6 pb-24 md:pb-6">
-            <h1 className="text-2xl font-bold mb-6 text-center">
-              Expense Tracker
-              {user && <span className="block text-sm text-gray-600 mt-1">Welcome, {user.name}</span>}
-            </h1>
-            
-            <div className="space-y-6">
-              <FinancialOverview
-                savingsRate={23}
-                budgetHealth={90}
-                nextBill={{ name: "Internet", amount: 50, dueDate: "2025-06-20", daysLeft: 2 }}
-                alerts={["Budget exceeded"]}
-                growth={15}
-                onViewReports={() => {}}
-                onAddExpense={() => {}}
-              />
-              
-              <BudgetSummaryCards
-                totalSpent={1248}
-                remainingBudget={752}
-                thisMonth={2000}
-              />
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <SpendingByCategoryChart
-                  data={[
-                    { name: "Food", value: 550 },
-                    { name: "Transport", value: 200 },
-                    { name: "Bills", value: 180 },
-                    { name: "Shopping", value: 160 },
-                    { name: "Other", value: 158 },
-                  ]}
-                />
-                <RecentExpenses
-                  expenses={[
-                    { id: "3", description: "T-shirt", amount: 25, date: "2025-06-13", category: "Shopping" },
-                    { id: "4", description: "Electricity", amount: 60, date: "2025-06-12", category: "Bills" },
-                    { id: "5", description: "Rent", amount: 800, date: "2025-06-01", category: "Rent" },
-                    { id: "6", description: "Gift", amount: 30, date: "2025-06-10", category: "Other" },
-                  ]}
-                />
-              </div>
-            </div>
+      <Layout 
+        title="Expense Tracker" 
+        subtitle={user ? `Welcome, ${user.name}` : undefined}
+      >
+        <div className="space-y-6">
+          <FinancialOverview
+            savingsRate={23}
+            budgetHealth={90}
+            nextBill={{ name: "Internet", amount: 50, dueDate: "2025-06-20", daysLeft: 2 }}
+            alerts={["Budget exceeded"]}
+            growth={15}
+            onViewReports={() => {}}
+            onAddExpense={() => {}}
+          />
+          
+          <BudgetSummaryCards
+            totalSpent={1248}
+            remainingBudget={752}
+            thisMonth={2000}
+          />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <SpendingByCategoryChart
+              data={[
+                { name: "Food", value: 550 },
+                { name: "Transport", value: 200 },
+                { name: "Bills", value: 180 },
+                { name: "Shopping", value: 160 },
+                { name: "Other", value: 158 },
+              ]}
+            />
+            <RecentExpenses
+              expenses={[
+                { id: "3", description: "T-shirt", amount: 25, date: "2025-06-13", category: "Shopping" },
+                { id: "4", description: "Electricity", amount: 60, date: "2025-06-12", category: "Bills" },
+                { id: "5", description: "Rent", amount: 800, date: "2025-06-01", category: "Rent" },
+                { id: "6", description: "Gift", amount: 30, date: "2025-06-10", category: "Other" },
+              ]}
+            />
           </div>
-        </main>
-      </div>
-      
-      {/* Mobile Bottom Navigation */}
-      <SideBar mobileOnly />
-    </div>
+        </div>
+      </Layout>
+    </>
   );
 };
 
