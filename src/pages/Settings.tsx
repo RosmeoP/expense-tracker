@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Settings, Mail, Bell, Palette, AlertTriangle, Crown } from "lucide-react";
+import Layout from '../components/Layout';
 
 // Types
 interface User {
@@ -310,18 +311,10 @@ export default function ImprovedSettings() {
   }, [showDeleteConfirm]);
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <header>
-          <h1 style={styles.header}>
-            <Settings size={32} color="#7c3aed" />
-            Settings
-          </h1>
-          <p style={styles.subtitle}>
-            Manage your preferences, account, and notifications to customize your experience.
-          </p>
-        </header>
-
+    <Layout title="Settings" subtitle="Manage your preferences, account, and notifications">
+      <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-200 p-6 md:p-10">
+        {/* Remove the custom header since Layout provides it */}
+        
         {/* Appearance Section */}
         <section style={styles.section}>
           <h2 style={styles.sectionHeader}>
@@ -485,6 +478,6 @@ export default function ImprovedSettings() {
           )}
         </section>
       </div>
-    </div>
+    </Layout>
   );
 }
