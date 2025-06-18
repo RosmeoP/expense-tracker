@@ -45,6 +45,7 @@ const SignUp = () => {
       }
       
       window.history.replaceState({}, document.title, window.location.pathname);
+      localStorage.setItem('loginTime', Date.now().toString());
       navigate('/dashboard');
     }
   }, [navigate]);
@@ -85,7 +86,6 @@ const SignUp = () => {
     try {
       const response = await registerUser(name.trim(), email.trim(), password);
       
-      // Check if response indicates verification is required
       if (response.requiresVerification) {
         setRegistrationSuccess(true);
         setRegisteredEmail(response.email);
@@ -97,6 +97,7 @@ const SignUp = () => {
         if (response.user) {
           localStorage.setItem('user', JSON.stringify(response.user));
         }
+        localStorage.setItem('loginTime', Date.now().toString());
         navigate('/dashboard');
       }
     } catch (err: any) {
