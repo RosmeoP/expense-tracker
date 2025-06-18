@@ -281,23 +281,7 @@ const Login = () => {
                 </svg>
               )}
               {isGoogleLoading ? 'Signing in...' : 'Sign in with Google'}
-            </button>
-            
-            <button
-              type="button"
-              disabled
-              className="w-full flex items-center justify-center gap-2 border border-gray-200 bg-white py-3 rounded-lg text-gray-900 opacity-60 cursor-not-allowed"
-              title="Coming soon"
-            >
-              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M16.365 1.43c0 1.14-.93 2.06-2.07 2.06-.04 0-.08 0-.12-.01-.17-1.09.95-2.05 2.07-2.05.04 0 .08 0 .12.01zm2.44 4.13c-1.13-.13-2.09.62-2.63.62-.54 0-1.37-.6-2.25-.58-.87.01-1.68.5-2.13 1.27-.91 1.57-.23 3.89.65 5.16.43.62.94 1.31 1.61 1.29.65-.03.9-.42 1.68-.42.78 0 1.01.42 1.68.41.69-.01 1.13-.63 1.56-1.25.49-.7.69-1.38.69-1.41-.02-.01-1.34-.51-1.36-2.01-.01-1.26 1.03-1.86 1.08-1.89-.59-.86-1.51-.96-1.83-.97zm-4.44 13.13c-.41.95-.84 1.89-1.51 1.91-.66.02-.87-.62-1.63-.62-.76 0-.99.6-1.62.64-.65.03-1.15-.92-1.56-1.87-1.07-2.36-1.89-6.68.09-8.57.74-.7 1.8-.72 2.37-.72.57 0 1.65.02 2.37.72 1.98 1.89 1.17 6.21.09 8.57z"
-                  fill="#111"
-                />
-              </svg>
-              Sign in with Apple
-            </button>
-            
+            </button>        
             <p className="text-center text-base text-gray-500 mt-5">
               Don't have an account?{' '}
               <a href="/signup" className="text-blue-600 hover:underline">

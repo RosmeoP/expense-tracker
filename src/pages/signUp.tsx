@@ -90,7 +90,6 @@ const SignUp = () => {
         setRegistrationSuccess(true);
         setRegisteredEmail(response.email);
       } else {
-        // If no verification required (shouldn't happen with new flow)
         localStorage.setItem('accessToken', response.accessToken);
         if (response.refreshToken) {
           localStorage.setItem('refreshToken', response.refreshToken);
@@ -144,7 +143,6 @@ const SignUp = () => {
     }
   };
 
-  // Show verification success screen
   if (registrationSuccess) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
@@ -256,20 +254,7 @@ const SignUp = () => {
                 )}
                 {isGoogleLoading ? 'Signing up...' : 'Sign up with Google'}
               </button>
-              <button
-                type="button"
-                disabled
-                className="w-1/2 flex items-center justify-center gap-2 border border-gray-200 bg-white py-2 rounded-lg text-gray-900 opacity-60 cursor-not-allowed"
-                title="Coming soon"
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M16.365 1.43c0 1.14-.93 2.06-2.07 2.06-.04 0-.08 0-.12-.01-.17-1.09.95-2.05 2.07-2.05.04 0 .08 0 .12.01zM12.36 6.56c.87-.01 1.7.58 2.25.58.54 0 1.5-.75 2.63-.62.32.01 1.24.11 1.83.97-.05.03-1.09.63-1.08 1.89.02 1.5 1.34 2 1.36 2.01-.01.03-.21.71-.7 1.41-.43.62-.87 1.24-1.56 1.25-.67.01-.9-.41-1.68-.41-.78 0-1.03.39-1.68.42-.67.02-1.18-.67-1.61-1.29-.88-1.27-1.56-3.59-.65-5.16.45-.77 1.26-1.26 2.13-1.27zM12.36 19.82c.77 0 .98.64 1.63.62.67-.02 1.1-.96 1.51-1.91 1.08-2.36 1.89-6.68-.09-8.57-.72-.7-1.8-.72-2.37-.72-.57 0-1.63.02-2.37.72-1.98 1.89-1.16 6.21-.09 8.57.41.95.91 1.9 1.56 1.87.63-.04.86-.64 1.62-.64z"
-                    fill="#111"
-                  />
-                </svg>
-                Sign up with Apple
-              </button>
+  
             </div>
             <div className="flex items-center mb-4">
               <hr className="flex-1 border-gray-200" />
