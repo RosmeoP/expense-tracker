@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route, Outlet, } from 'react-router-do
 import Login from './pages/login.tsx';
 import SignUp from './pages/signUp.tsx';
 import EmailVerification from './pages/EmailVerification.tsx'; // Add this import
+import ForgotPassword from './pages/ForgotPassword.tsx';
+import ResetPassword from './pages/ResetPassword.tsx';
 import Dashboard from './components/dashboard.tsx';
 import Transactions from './pages/Transactions.tsx';
 import Budgets from './pages/Budgets.tsx';
@@ -38,6 +40,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         
         {/* Add email verification route */}
         <Route path="/verify-email" element={<EmailVerification />} />
