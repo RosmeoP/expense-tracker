@@ -85,7 +85,7 @@ const ResetPassword = () => {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-purple-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
             <div className="text-center">
@@ -107,7 +107,7 @@ const ResetPassword = () => {
               
               <Link
                 to="/login"
-                className="w-full bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 inline-block"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 inline-block"
               >
                 Go to Login
               </Link>
@@ -119,12 +119,12 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-purple-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
           <div className="text-center mb-8">
-            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-violet-100 mb-6">
-              <Lock className="h-8 w-8 text-violet-600" />
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
+              <Lock className="h-8 w-8 text-blue-600" />
             </div>
             
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -147,7 +147,7 @@ const ResetPassword = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-colors duration-200"
+                  className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
                   placeholder="Enter your new password"
                   disabled={isLoading}
                 />
@@ -174,7 +174,7 @@ const ResetPassword = () => {
                   type={showConfirmPassword ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-colors duration-200"
+                  className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
                   placeholder="Confirm your new password"
                   disabled={isLoading}
                 />
@@ -198,7 +198,7 @@ const ResetPassword = () => {
             <button
               type="submit"
               disabled={isLoading || !token}
-              className="w-full bg-violet-600 hover:bg-violet-700 disabled:bg-violet-400 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
@@ -214,7 +214,7 @@ const ResetPassword = () => {
           <div className="mt-6 text-center">
             <Link
               to="/login"
-              className="text-violet-600 hover:text-violet-700 font-medium transition-colors duration-200"
+              className="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
             >
               Back to Login
             </Link>
