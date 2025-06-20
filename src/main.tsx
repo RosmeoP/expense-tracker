@@ -3,6 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router, Routes, Route, Outlet, } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeContext.tsx';
 import Login from './pages/login.tsx';
 import SignUp from './pages/signUp.tsx';
 import EmailVerification from './pages/EmailVerification.tsx'; // Add this import
@@ -21,9 +22,9 @@ import TopNav from './components/TopNav.tsx';
 // Layout with sidebar for protected pages
 function AppLayout() {
   return (
-    <div className="flex">
+    <div className="flex theme-bg">
       <SideBar />
-      <main className="flex-1 min-h-screen bg-gray-50">
+      <main className="flex-1 min-h-screen theme-bg">
         <TopNav />
         <div className="pt-14 md:pt-0"> {/* Add padding for top nav on mobile */}
           <Outlet />
@@ -35,28 +36,30 @@ function AppLayout() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        
-        {/* Add email verification route */}
-        <Route path="/verify-email" element={<EmailVerification />} />
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          
+          {/* Add email verification route */}
+          <Route path="/verify-email" element={<EmailVerification />} />
 
-        <Route element={<ProtectedRoute />}>
-          <Route element={<AppLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/transactions" element={<Transactions />} />
-            <Route path="/budgets" element={<Budgets />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/goals" element={<Goals />} />
-            <Route path="/settings" element={<Settings />} />
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AppLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/transactions" element={<Transactions />} />
+              <Route path="/budgets" element={<Budgets />} />
+              <Route path="/reports" element={<Reports />} />
+              <Route path="/goals" element={<Goals />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </ThemeProvider>
   </StrictMode>
 );

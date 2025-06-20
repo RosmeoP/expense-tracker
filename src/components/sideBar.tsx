@@ -41,13 +41,13 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
       {!mobileOnly && (
         <TooltipProvider>
           <aside
-            className="hidden md:flex fixed left-0 top-0 h-full w-64 bg-white text-red-200 flex-col shadow-lg z-30 overflow-y-auto"
+            className="hidden md:flex fixed left-0 top-0 h-full w-64 theme-sidebar flex-col shadow-lg z-30 overflow-y-auto"
             role="navigation"
             aria-label="Sidebar"
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-center h-20 border-b border-gray-200 flex-shrink-0">
+              <div className="flex items-center justify-center h-20 border-b theme-sidebar flex-shrink-0">
                 <img src="/logo192.png" alt="Logo" className="w-10 h-10" />
               </div>
               
@@ -59,7 +59,7 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
                   ))}
                 </SidebarSection>
                 
-                <Separator className="bg-gray-200" />
+                <Separator className="bg-gray-200 dark:bg-gray-700" />
                 
                 <SidebarSection title="Planning">
                   {NAV_ITEMS.slice(2, 5).map(item => (
@@ -67,7 +67,7 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
                   ))}
                 </SidebarSection>
                 
-                <Separator className="bg-gray-200" />
+                <Separator className="bg-gray-200 dark:bg-gray-700" />
                 
                 <SidebarSection title="Account">
                   <NavItem {...NAV_ITEMS[5]} active={pathname === NAV_ITEMS[5].href} />
@@ -75,10 +75,10 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
               </nav>
               
               {/* Log Out Button */}
-              <div className="flex-shrink-0 p-4 border-t border-gray-200">
+              <div className="flex-shrink-0 p-4 border-t theme-sidebar">
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-3 px-4 py-3 w-full text-red-500 rounded-lg hover:bg-red-50 transition duration-200 hover:scale-105 active:scale-95"
+                  className="flex items-center gap-3 px-4 py-3 w-full text-red-500 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition duration-200 hover:scale-105 active:scale-95"
                   aria-label="Log Out"
                 >
                   <span className="text-xl">
@@ -103,7 +103,7 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[95vw] max-w-md bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-200 flex justify-between gap-x-2 px-4 py-2"
+            className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[95vw] max-w-md theme-sidebar backdrop-blur-lg rounded-2xl shadow-2xl border flex justify-between gap-x-2 px-4 py-2"
             role="navigation"
             aria-label="Mobile Navigation"
           >
@@ -117,8 +117,8 @@ const SideBar: React.FC<SideBarProps> = ({ mobileOnly = false }) => {
                   aria-current={isActive ? "page" : undefined}
                   className={`flex flex-col items-center justify-center flex-1 py-1 px-2 transition ${
                     isActive
-                      ? "text-blue-600 font-bold"
-                      : "text-gray-500 hover:text-blue-500"
+                      ? "theme-sidebar-active font-bold rounded-lg"
+                      : "theme-sidebar-text hover:opacity-80"
                   }`}
                 >
                   <motion.span
@@ -171,7 +171,7 @@ const mobileNavVariants: Variants = {
 
 const SidebarSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="mb-2">
-    <p className="text-gray-600 text-xs font-semibold uppercase tracking-wider mb-3 px-2">{title}</p>
+    <p className="theme-sidebar-text text-xs font-semibold uppercase tracking-wider mb-3 px-2 opacity-70">{title}</p>
     <div className="space-y-1">
       {children}
     </div>
@@ -199,10 +199,10 @@ const NavItem = ({
         className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group relative
           ${
             active
-              ? "bg-blue-600 text-white shadow-md"
+              ? "theme-sidebar-active shadow-md"
               : muted
-              ? "text-gray-400 hover:text-gray-600"
-              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+              ? "theme-sidebar-text opacity-50 hover:opacity-70"
+              : "theme-sidebar-text hover:bg-gray-100 dark:hover:bg-gray-700 hover:opacity-80"
           }`}
       >
         {active && (

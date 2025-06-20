@@ -23,9 +23,9 @@ type SpendingByCategoryChartProps = {
 };
 
 const SpendingByCategoryChart: React.FC<SpendingByCategoryChartProps> = ({ data }) => (
-  <Card className="w-full h-[355px] border border-gray-200">
+  <Card className="w-full h-[355px] border border-gray-200 dark:border-gray-700 dark:bg-gray-800">
     <CardHeader className="pb-2">
-      <CardTitle className="text-sm font-semibold">Spending by Category</CardTitle>
+      <CardTitle className="text-sm font-semibold text-gray-900 dark:text-white">Spending by Category</CardTitle>
     </CardHeader>
     <CardContent className="flex flex-col items-center pt-0">
       <div className="w-full h-24 sm:h-28 xs:h-20">
@@ -53,6 +53,9 @@ const SpendingByCategoryChart: React.FC<SpendingByCategoryChartProps> = ({ data 
                 fontSize: "0.85rem",
                 borderRadius: "0.5rem",
                 padding: "0.5rem",
+                backgroundColor: "var(--tw-bg-opacity, 1) rgb(255 255 255 / var(--tw-bg-opacity))",
+                border: "1px solid rgb(229 231 235 / var(--tw-border-opacity))",
+                color: "rgb(17 24 39 / var(--tw-text-opacity))"
               }}
               formatter={(value: number, name: string) => [`$${value}`, name]}
             />

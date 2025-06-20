@@ -12,13 +12,13 @@ const TopNav: React.FC = () => {
   const { pathname } = useLocation();
 
   return (
-    <header className="md:hidden fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-lg shadow">
+    <header className="md:hidden fixed top-0 left-0 w-full z-50 theme-sidebar backdrop-blur-lg shadow">
       <div className="flex items-center justify-between px-4 py-3">
-        <span className="font-bold text-lg">Expense Tracker</span>
+        <span className="font-bold text-lg theme-sidebar-text">Expense Tracker</span>
         <button
           aria-label="Open menu"
           onClick={() => setOpen(true)}
-          className="p-2 rounded hover:bg-gray-100"
+          className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 theme-sidebar-text"
         >
           <Menu size={28} />
         </button>
@@ -26,11 +26,11 @@ const TopNav: React.FC = () => {
       {/* Drawer/Modal */}
       {open && (
         <div className="fixed inset-0 z-50 bg-black/40 flex">
-          <div className="bg-white w-64 h-full shadow-lg p-6 flex flex-col">
+          <div className="theme-sidebar w-64 h-full shadow-lg p-6 flex flex-col">
             <button
               aria-label="Close menu"
               onClick={() => setOpen(false)}
-              className="self-end mb-4 p-1 rounded hover:bg-gray-100"
+              className="self-end mb-4 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 theme-sidebar-text"
             >
               <X size={24} />
             </button>
@@ -42,8 +42,8 @@ const TopNav: React.FC = () => {
                   onClick={() => setOpen(false)}
                   className={`text-lg px-2 py-1 rounded ${
                     pathname === item.href
-                      ? "text-blue-600 font-bold"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "theme-sidebar-active font-bold"
+                      : "theme-sidebar-text hover:bg-gray-100 dark:hover:bg-gray-700"
                   }`}
                 >
                   {item.label}
