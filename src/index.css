@@ -14,6 +14,30 @@
   --hover-bg: rgba(139, 92, 246, 0.05);
   --hover-border: rgba(139, 92, 246, 0.2);
   --hover-text: #7c3aed;
+  
+  /* Color system for both themes */
+  --color-blue: #3b82f6;
+  --color-green: #10b981;
+  --color-red: #ef4444;
+  --color-orange: #f97316;
+  --color-pink: #ec4899;
+  --color-yellow: #eab308;
+  --color-purple: #a855f7;
+  
+  /* Border colors */
+  --border-blue: #3b82f6;
+  --border-green: #22c55e;
+  --border-pink: #ec4899;
+  --border-yellow: #eab308;
+  
+  /* Background colors */
+  --bg-blue-light: #dbeafe;
+  --bg-green-light: #dcfce7;
+  --bg-red-light: #fee2e2;
+  --bg-orange-light: #fed7aa;
+  --bg-pink-light: #fce7f3;
+  --bg-yellow-light: #fef3c7;
+  --bg-purple-light: #f3e8ff;
 }
 
 /* Theme classes */
@@ -121,17 +145,95 @@
   background-color: var(--hover-bg) !important;
 }
 
-/* Amount colors that work in both themes */
+/* Amount colors using CSS custom properties */
 .theme-amount-positive {
-  color: #10b981 !important; /* emerald-500 */
+  color: var(--color-green) !important;
 }
 
 .theme-amount-negative {
-  color: #ef4444 !important; /* red-500 */
+  color: var(--color-red) !important;
 }
 
 .theme-amount-primary {
-  color: #3b82f6 !important; /* blue-500 */
+  color: var(--color-blue) !important;
+}
+
+/* Universal color classes using CSS custom properties */
+.text-blue-600, .text-blue-500 { color: var(--color-blue) !important; }
+.text-green-600, .text-green-500 { color: var(--color-green) !important; }
+.text-red-600, .text-red-500 { color: var(--color-red) !important; }
+.text-orange-600, .text-orange-500 { color: var(--color-orange) !important; }
+.text-pink-600, .text-pink-500 { color: var(--color-pink) !important; }
+.text-yellow-600, .text-yellow-500 { color: var(--color-yellow) !important; }
+.text-purple-600, .text-purple-500 { color: var(--color-purple) !important; }
+
+/* Border colors using CSS custom properties */
+.border-blue-500 { border-color: var(--border-blue) !important; }
+.border-green-500 { border-color: var(--border-green) !important; }
+.border-pink-500 { border-color: var(--border-pink) !important; }
+.border-yellow-500 { border-color: var(--border-yellow) !important; }
+
+/* Background colors using CSS custom properties */
+.bg-blue-100 { background-color: var(--bg-blue-light) !important; }
+.bg-green-100 { background-color: var(--bg-green-light) !important; }
+.bg-red-100 { background-color: var(--bg-red-light) !important; }
+.bg-orange-100 { background-color: var(--bg-orange-light) !important; }
+.bg-pink-100 { background-color: var(--bg-pink-light) !important; }
+.bg-yellow-100 { background-color: var(--bg-yellow-light) !important; }
+.bg-purple-100 { background-color: var(--bg-purple-light) !important; }
+
+/* Progress bar gradient using CSS custom properties */
+.from-green-400 {
+  --tw-gradient-from: var(--color-green) !important;
+  --tw-gradient-from-position: !important;
+  --tw-gradient-to: rgb(16 185 129 / 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-green-600 {
+  --tw-gradient-to: var(--color-green) !important;
+  --tw-gradient-to-position: !important;
+}
+
+/* Dark mode - keep intense colors */
+.theme-dark {
+  --color-blue: #60a5fa;
+  --color-green: #34d399;
+  --color-red: #f87171;
+  --color-orange: #fb923c;
+  --color-pink: #f472b6;
+  --color-yellow: #fbbf24;
+  --color-purple: #c084fc;
+  
+  --border-blue: #3b82f6;
+  --border-green: #10b981;
+  --border-pink: #ec4899;
+  --border-yellow: #f59e0b;
+  
+  /* Dark mode background colors - darker for contrast */
+  --bg-blue-light: #1e3a8a;
+  --bg-green-light: #064e3b;
+  --bg-red-light: #7f1d1d;
+  --bg-orange-light: #9a3412;
+  --bg-pink-light: #831843;
+  --bg-yellow-light: #713f12;
+  --bg-purple-light: #581c87;
+}
+
+/* Light mode color overrides - softer palette */
+.theme-light {
+  --color-blue: #2563eb;
+  --color-green: #059669;
+  --color-red: #dc2626;
+  --color-orange: #ea580c;
+  --color-pink: #db2777;
+  --color-yellow: #ca8a04;
+  --color-purple: #9333ea;
+  
+  --border-blue: #93c5fd;
+  --border-green: #86efac;
+  --border-pink: #f9a8d4;
+  --border-yellow: #fde047;
 }
 
 /* Apply theme to body */
