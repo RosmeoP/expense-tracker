@@ -23,9 +23,9 @@ type SpendingByCategoryChartProps = {
 };
 
 const SpendingByCategoryChart: React.FC<SpendingByCategoryChartProps> = ({ data }) => (
-  <Card className="w-full h-[355px] border border-gray-200">
+  <Card className="w-full h-[355px] border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
     <CardHeader className="pb-2">
-      <CardTitle className="text-sm font-semibold">Spending by Category</CardTitle>
+      <CardTitle className="text-sm font-semibold text-gray-900 dark:text-gray-100">Spending by Category</CardTitle>
     </CardHeader>
     <CardContent className="flex flex-col items-center pt-0">
       <div className="w-full h-24 sm:h-28 xs:h-20">

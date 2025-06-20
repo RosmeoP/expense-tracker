@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, title, subtitle }) => {
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
       <SideBar />
       
       <div className="flex-1 flex flex-col overflow-hidden md:ml-64">
@@ -18,12 +18,12 @@ const Layout: React.FC<LayoutProps> = ({ children, title, subtitle }) => {
             {(title || subtitle) && (
               <div className="mb-6 text-center">
                 {title && (
-                  <h1 className="text-2xl font-bold text-gray-900">
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                     {title}
                   </h1>
                 )}
                 {subtitle && (
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                     {subtitle}
                   </p>
                 )}
