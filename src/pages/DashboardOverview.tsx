@@ -8,7 +8,7 @@ const DashboardOverview = () => {
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
           {/* Total Balance */}
-          <div className="relative theme-card rounded-2xl shadow-xl border-t-4 border-blue-500 p-6 overflow-hidden group theme-hover">
+          <div className="relative theme-card rounded-2xl border-t-4 border-blue-500 p-6 overflow-hidden group theme-hover">
             <div className="absolute right-4 top-4 opacity-10 text-6xl pointer-events-none select-none">
               💰
             </div>
@@ -17,7 +17,7 @@ const DashboardOverview = () => {
             <div className="text-xs theme-text-secondary opacity-70">Updated just now</div>
           </div>
           {/* Monthly Expenses */}
-          <div className="relative theme-card rounded-2xl shadow-xl border-t-4 border-pink-500 p-6 overflow-hidden group theme-hover">
+          <div className="relative theme-card rounded-2xl border-t-4 border-pink-500 p-6 overflow-hidden group theme-hover">
             <div className="absolute right-4 top-4 opacity-10 text-6xl pointer-events-none select-none">
               🛒
             </div>
@@ -26,7 +26,7 @@ const DashboardOverview = () => {
             <div className="text-xs theme-text-secondary opacity-70">+8% from last month</div>
           </div>
           {/* Budget Used */}
-          <div className="relative theme-card rounded-2xl shadow-xl border-t-4 border-green-500 p-6 overflow-hidden group theme-hover">
+          <div className="relative theme-card rounded-2xl border-t-4 border-green-500 p-6 overflow-hidden group theme-hover">
             <div className="absolute right-4 top-4 opacity-10 text-6xl pointer-events-none select-none">
               📊
             </div>
@@ -45,7 +45,7 @@ const DashboardOverview = () => {
        
 
         {/* Recent Transactions */}
-        <div className="theme-card rounded-2xl shadow-xl theme-border border p-8">
+        <div className="theme-card rounded-2xl theme-border border p-8">
           <div className="flex items-center justify-between mb-6">
             <div className="text-xl font-semibold theme-text flex items-center gap-2">
               <svg className="w-6 h-6 theme-amount-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

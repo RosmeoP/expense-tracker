@@ -180,12 +180,12 @@ export default function Settings() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-blue-900 mb-1">Google Account Integration</h3>
-                  <p className="text-sm text-blue-700 mb-3">
+                  <h3 className="font-semibold theme-amount-primary mb-1">Google Account Integration</h3>
+                  <p className="text-sm theme-text-secondary mb-3">
                     Your account is securely linked with Google. This provides enhanced security and seamless sign-in experience.
                   </p>
                   <div className="flex items-center gap-4 text-xs">
-                    <div className="flex items-center gap-1 text-green-600">
+                    <div className="flex items-center gap-1 theme-amount-positive">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       <span>Verified Email</span>
                     </div>
