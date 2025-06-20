@@ -22,33 +22,33 @@ const CATEGORY_META: Record<
 > = {
   Food: {
     icon: <HiOutlineFastForward className="text-orange-500" />,
-    color: "bg-orange-100 text-orange-700",
-    tagColor: "bg-orange-200 text-orange-700",
+    color: "bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300",
+    tagColor: "bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-300",
   },
   Shopping: {
     icon: <HiOutlineShoppingBag className="text-pink-500" />,
-    color: "bg-pink-100 text-pink-700",
-    tagColor: "bg-pink-200 text-pink-700",
+    color: "bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-300",
+    tagColor: "bg-pink-200 dark:bg-pink-800 text-pink-700 dark:text-pink-300",
   },
   Transport: {
     icon: <HiOutlineCake className="text-blue-500" />,
-    color: "bg-blue-100 text-blue-700",
-    tagColor: "bg-blue-200 text-blue-700",
+    color: "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300",
+    tagColor: "bg-blue-200 dark:bg-blue-800 text-blue-700 dark:text-blue-300",
   },
   Bills: {
     icon: <HiOutlineCreditCard className="text-green-500" />,
-    color: "bg-green-100 text-green-700",
-    tagColor: "bg-green-200 text-green-700",
+    color: "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300",
+    tagColor: "bg-green-200 dark:bg-green-800 text-green-700 dark:text-green-300",
   },
   Rent: {
     icon: <HiOutlineHome className="text-purple-500" />,
-    color: "bg-purple-100 text-purple-700",
-    tagColor: "bg-purple-200 text-purple-700",
+    color: "bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300",
+    tagColor: "bg-purple-200 dark:bg-purple-800 text-purple-700 dark:text-purple-300",
   },
   Other: {
     icon: <FaRegMoneyBillAlt className="text-gray-500" />,
-    color: "bg-gray-100 text-gray-700",
-    tagColor: "bg-gray-200 text-gray-700",
+    color: "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300",
+    tagColor: "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300",
   },
 };
 
@@ -59,9 +59,9 @@ const RecentExpenses: React.FC<RecentExpensesProps> = ({
   expenses,
   maxHeight = "240px",
 }) => (
-  <Card className="w-full h-[355px] border border-gray-200 shadow-lg">
-    <CardHeader className="pb-0 bg-gradient-to-r from-blue-50 to-white rounded-t-xl shadow-sm">
-      <CardTitle className="text-base font-semibold flex items-center gap-2 text-blue-900">
+  <Card className="w-full h-[355px] theme-border border shadow-lg">
+    <CardHeader className="pb-0 theme-gradient rounded-t-xl shadow-sm">
+      <CardTitle className="text-base font-semibold flex items-center gap-2 theme-amount-primary">
         <HiOutlineReceiptRefund className="text-blue-500 text-xl" />
         Recent Expenses
       </CardTitle>
@@ -72,7 +72,7 @@ const RecentExpenses: React.FC<RecentExpensesProps> = ({
         style={{ maxHeight }}
       >
         {expenses.length === 0 ? (
-          <div className="px-4 py-8 text-gray-400 text-center">No recent expenses.</div>
+          <div className="px-4 py-8 theme-text-secondary text-center">No recent expenses.</div>
         ) : (
           <ul className="flex flex-col gap-2">
             {expenses.map((exp) => {
@@ -80,7 +80,7 @@ const RecentExpenses: React.FC<RecentExpensesProps> = ({
               return (
                 <li
                   key={exp.id}
-                  className="flex items-center justify-between bg-white rounded-lg px-3 py-2 shadow-sm border border-gray-100 hover:shadow-md hover:bg-blue-50 transition-all duration-150"
+                  className="flex items-center justify-between theme-list-item rounded-lg px-3 py-2 shadow-sm theme-border border transition-all duration-150"
                 >
                   <div className="flex items-center gap-3">
                     {/* Avatar with icon */}
@@ -88,16 +88,16 @@ const RecentExpenses: React.FC<RecentExpensesProps> = ({
                       {meta.icon}
                     </div>
                     <div>
-                      <div className="font-medium text-gray-800 text-[15px] flex items-center gap-2">
+                      <div className="font-medium theme-text text-[15px] flex items-center gap-2">
                         {exp.description}
                         <span className={`ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ${meta.tagColor}`}>
                           {exp.category}
                         </span>
                       </div>
-                      <div className="text-xs text-gray-400">{exp.date}</div>
+                      <div className="text-xs theme-text-secondary">{exp.date}</div>
                     </div>
                   </div>
-                  <div className="font-bold text-blue-700 text-[15px]">${exp.amount.toFixed(2)}</div>
+                  <div className="font-bold theme-amount-primary text-[15px]">${exp.amount.toFixed(2)}</div>
                 </li>
               );
             })}

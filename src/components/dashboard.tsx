@@ -106,7 +106,7 @@ const Dashboard = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your dashboard...</p>
+          <p className="theme-text-secondary">Loading your dashboard...</p>
         </div>
       </div>
     );
@@ -121,10 +121,10 @@ const Dashboard = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
           </div>
-          <p className="text-red-600 text-lg">{error}</p>
+          <p className="theme-amount-negative text-lg">{error}</p>
           <button 
             onClick={() => navigate("/login")}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
           >
             Go to Login
           </button>
@@ -137,7 +137,7 @@ const Dashboard = () => {
     <>
       {/* Welcome notification */}
       {user && showWelcome && (
-        <div className="fixed top-6 right-6 z-50 bg-white/95 backdrop-blur-sm border border-green-200/50 shadow-2xl rounded-2xl p-5 transition-all duration-500 transform animate-in slide-in-from-right-5 hover:scale-105">
+        <div className="fixed top-6 right-6 z-50 theme-card backdrop-blur-sm theme-border border shadow-2xl rounded-2xl p-5 transition-all duration-500 transform animate-in slide-in-from-right-5 hover:scale-105">
           <div className="flex items-start gap-4">
             <div className="flex-shrink-0 relative">
               <div className="w-12 h-12 bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
@@ -149,10 +149,10 @@ const Dashboard = () => {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="text-base font-bold text-gray-900">Welcome back!</h3>
+                <h3 className="text-base font-bold theme-text">Welcome back!</h3>
                 <span className="text-lg">🎉</span>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm theme-text-secondary leading-relaxed">
                 Hey <span className="font-semibold text-indigo-600">{user.name}</span>, great to see you again!
               </p>
               <div className="mt-2 flex items-center gap-1">
@@ -162,7 +162,7 @@ const Dashboard = () => {
             </div>
             <button 
               onClick={() => setShowWelcome(false)}
-              className="flex-shrink-0 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200"
+              className="flex-shrink-0 p-1 theme-text-secondary hover:theme-text hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200"
               aria-label="Close notification"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,11 +182,11 @@ const Dashboard = () => {
             </h1>
             
             {user && (
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200">
+              <div className="inline-flex items-center gap-2 px-4 py-2 theme-gradient rounded-full theme-border border">
                 <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <p className="text-sm font-medium text-blue-700">
+                <p className="text-sm font-medium theme-amount-primary">
                   Welcome, {user.name}
                 </p>
               </div>
