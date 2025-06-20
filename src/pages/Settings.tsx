@@ -214,7 +214,7 @@ export default function Settings() {
               <label
                 key={option.key}
                 className={`flex items-center justify-between p-4 cursor-pointer hover:opacity-80 transition-colors duration-150 ${
-                  index !== NOTIFICATION_OPTIONS.length - 1 ? 'border-b' : ''
+                  index !== NOTIFICATION_OPTIONS.length - 1 ? 'border-b border-gray-200' : ''
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -251,24 +251,29 @@ export default function Settings() {
 
         {/* Pro Section */}
         <section className="mb-8">
-          <div className="relative overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-dashed border-amber-200 rounded-xl p-6">
+          <div className="relative overflow-hidden border-2 border-dashed rounded-xl p-6" style={{
+            background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 146, 60, 0.1) 100%)',
+            borderColor: 'rgba(245, 158, 11, 0.3)'
+          }}>
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{
+                  backgroundColor: 'rgba(245, 158, 11, 0.2)'
+                }}>
                   <Crown className="w-6 h-6 text-amber-600" />
                 </div>
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <h3 className="font-bold text-amber-900">Advanced Customization</h3>
+                  <h3 className="font-bold theme-text">Advanced Customization</h3>
                   <div className="bg-amber-200 text-amber-800 text-xs font-bold px-2 py-1 rounded-full">
                     PRO
                   </div>
                 </div>
-                <p className="text-sm text-amber-700 mb-4">
+                <p className="text-sm theme-text-secondary mb-4">
                   Unlock custom themes, advanced notifications, detailed analytics, and export options to take full control of your financial tracking.
                 </p>
-                <div className="grid grid-cols-2 gap-2 text-xs text-amber-600 mb-4">
+                <div className="grid grid-cols-2 gap-2 text-xs theme-text-secondary mb-4">
                   <div className="flex items-center gap-1">
                     <div className="w-1 h-1 bg-amber-500 rounded-full"></div>
                     <span>Custom Themes</span>
@@ -303,16 +308,21 @@ export default function Settings() {
             <AlertTriangle className="w-4 h-4" />
             <span className="text-sm">Danger Zone</span>
           </div>
-          <div className="bg-red-50 border border-red-200 rounded-xl p-5">
+          <div className="border rounded-xl p-5" style={{
+            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%)',
+            borderColor: 'rgba(239, 68, 68, 0.3)'
+          }}>
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{
+                  backgroundColor: 'rgba(239, 68, 68, 0.2)'
+                }}>
                   <AlertTriangle className="w-5 h-5 text-red-600" />
                 </div>
               </div>
               <div className="flex-1">
-                <h4 className="font-semibold text-red-900 mb-1">Delete Account</h4>
-                <p className="text-sm text-red-700 mb-4">
+                <h4 className="font-semibold theme-text mb-1">Delete Account</h4>
+                <p className="text-sm theme-text-secondary mb-4">
                   Permanently delete your account and all associated data. This action cannot be undone.
                 </p>
                 <button className="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md border border-red-700">
