@@ -17,14 +17,13 @@ import ProtectedRoute from './components/auth/protectedRoute.tsx';
 import SideBar from './components/sideBar.tsx';
 import Settings from './pages/Settings.tsx';
 import TopNav from './components/TopNav.tsx';
-import { ThemeProvider } from './contexts/ThemeContext.tsx';
 
 // Layout with sidebar for protected pages
 function AppLayout() {
   return (
     <div className="flex">
       <SideBar />
-      <main className="flex-1 min-h-screen bg-gray-50 dark:bg-gray-900">
+      <main className="flex-1 min-h-screen bg-gray-50">
         <TopNav />
         <div className="pt-14 md:pt-0"> {/* Add padding for top nav on mobile */}
           <Outlet />
@@ -36,20 +35,19 @@ function AppLayout() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          
-          {/* Add email verification route */}
-          <Route path="/verify-email" element={<EmailVerification />} />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        
+        {/* Add email verification route */}
+        <Route path="/verify-email" element={<EmailVerification />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route element={<AppLayout />}>
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/budgets" element={<Budgets />} />
@@ -60,6 +58,5 @@ createRoot(document.getElementById('root')!).render(
         </Route>
       </Routes>
     </Router>
-    </ThemeProvider>
   </StrictMode>
 );
