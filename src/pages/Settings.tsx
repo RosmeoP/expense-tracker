@@ -172,11 +172,15 @@ export default function Settings() {
         {/* Account Provider Info */}
         {isGoogleUser && (
           <section className="mb-8">
-            <div className="relative overflow-hidden bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5">
+            <div className="relative overflow-hidden theme-card border rounded-xl p-5" style={{
+              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%)'
+            }}>
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)'
+                  }}>
+                    <Shield className="w-6 h-6 theme-amount-primary" />
                   </div>
                 </div>
                 <div className="flex-1">
@@ -186,18 +190,22 @@ export default function Settings() {
                   </p>
                   <div className="flex items-center gap-4 text-xs">
                     <div className="flex items-center gap-1 theme-amount-positive">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <div className="w-2 h-2 rounded-full" style={{
+                        backgroundColor: 'var(--color-green)'
+                      }}></div>
                       <span>Verified Email</span>
                     </div>
-                    <div className="flex items-center gap-1 text-blue-600">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-1 theme-amount-primary">
+                      <div className="w-2 h-2 rounded-full" style={{
+                        backgroundColor: 'var(--color-blue)'
+                      }}></div>
                       <span>Secure Authentication</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="absolute top-0 right-0 w-20 h-20 opacity-10">
-                <Shield className="w-full h-full text-blue-600" />
+                <Shield className="w-full h-full theme-amount-primary" />
               </div>
             </div>
           </section>
