@@ -47,17 +47,18 @@
 
 .theme-sidebar-text {
   color: var(--sidebar-text) !important;
+  transition: all 0.2s ease;
+}
+
+.theme-sidebar-text:hover {
+  background-color: rgba(139, 92, 246, 0.1) !important;
+  border-radius: 8px;
+  transform: translateX(2px);
 }
 
 .theme-sidebar-active {
   background-color: var(--sidebar-active) !important;
   color: white !important;
-}
-
-.theme-sidebar-text:hover {
-  background-color: var(--bg-secondary) !important;
-  opacity: 0.8 !important;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
 .theme-button-hover:hover {
