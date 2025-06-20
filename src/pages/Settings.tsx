@@ -61,10 +61,14 @@ export default function Settings() {
       <div className="max-w-3xl mx-auto">
         <div className="theme-card rounded-2xl shadow-xl border overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 px-8 py-6 border-b border-gray-200 dark:border-gray-600 theme-text">
+          <div className="px-8 py-6 border-b" style={{
+            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)'
+          }}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white dark:bg-violet-900/50 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-black dark:text-violet-400" />
+              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{
+                backgroundColor: 'rgba(139, 92, 246, 0.2)'
+              }}>
+                <User className="w-5 h-5 text-violet-600" />
               </div>
               <div>
                 <h2 className="font-bold text-xl theme-text">Account Settings</h2>
@@ -79,7 +83,7 @@ export default function Settings() {
         {/* Appearance */}
         <section className="mb-8">
           <div className="flex items-center gap-2 font-semibold mb-3 theme-text">
-            <Palette className="w-4 h-4 text-black dark:text-violet-400" />
+            <Palette className="w-4 h-4 text-violet-600" />
             <span className="text-sm">Appearance</span>
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -93,7 +97,7 @@ export default function Settings() {
                 className={`flex flex-col items-center gap-1 py-3 px-2 rounded-lg font-medium text-sm transition-all duration-200 ${
                   theme === mode
                     ? "bg-violet-600 text-white shadow-lg scale-105"
-                    : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:text-violet-700 dark:hover:text-violet-400 hover:scale-102"
+                    : "bg-gray-100 text-gray-700 hover:bg-violet-50 hover:text-violet-700 hover:scale-102"
                 }`}
                 onClick={() => setTheme(mode as typeof theme)}
               >
@@ -107,7 +111,7 @@ export default function Settings() {
         {/* Email */}
         <section className="mb-8">
           <div className="flex items-center gap-2 font-semibold mb-3 theme-text">
-            <Mail className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+            <Mail className="w-4 h-4 text-violet-600" />
             <span className="text-sm">Email Address</span>
           </div>
           <div className="space-y-3">
@@ -118,10 +122,10 @@ export default function Settings() {
                   value={userEmail}
                   readOnly={!canEditEmail}
                   disabled={!canEditEmail}
-                  className={`w-full py-3 px-4 rounded-lg border text-base transition-all duration-200 ${
+                  className={`w-full py-3 px-4 rounded-lg border text-base transition-all duration-200 theme-card ${
                     canEditEmail 
-                      ? "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-violet-500 dark:focus:border-violet-400 focus:ring-2 focus:ring-violet-100 dark:focus:ring-violet-900/20 focus:outline-none" 
-                      : "border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
+                      ? "focus:border-violet-500 focus:ring-2 focus:ring-violet-100 focus:outline-none" 
+                      : "opacity-60 cursor-not-allowed"
                   }`}
                   onChange={(e) => canEditEmail && setUserEmail(e.target.value)}
                   placeholder="Enter your email address"
@@ -136,7 +140,7 @@ export default function Settings() {
                 className={`px-6 py-3 font-medium rounded-lg transition-all duration-200 ${
                   canEditEmail
                     ? "bg-violet-600 hover:bg-violet-700 text-white shadow-md hover:shadow-lg transform hover:scale-105"
-                    : "bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed"
+                    : "opacity-60 cursor-not-allowed theme-card"
                 }`}
                 disabled={!canEditEmail}
               >
@@ -146,19 +150,19 @@ export default function Settings() {
             <div className="flex items-center gap-2 text-xs">
               {isGoogleUser ? (
                 <>
-                  <div className="flex items-center gap-1 text-blue-800 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-600 px-2 py-1 rounded-full">
+                  <div className="flex items-center gap-1 text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
                     <Shield className="w-3 h-3" />
                     <span className="font-medium">Google Protected</span>
                   </div>
-                  <span className="text-gray-600 dark:text-gray-400">This email is managed by your Google account</span>
+                  <span className="theme-text-secondary">This email is managed by your Google account</span>
                 </>
               ) : (
                 <>
-                  <div className="flex items-center gap-1 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">
+                  <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-full">
                     <User className="w-3 h-3" />
                     <span className="font-medium">Editable</span>
                   </div>
-                  <span className="text-gray-500 dark:text-gray-400">You can update your email address</span>
+                  <span className="theme-text-secondary">You can update your email address</span>
                 </>
               )}
             </div>
@@ -168,24 +172,24 @@ export default function Settings() {
         {/* Account Provider Info */}
         {isGoogleUser && (
           <section className="mb-8">
-            <div className="relative overflow-hidden bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-5">
+            <div className="relative overflow-hidden bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-blue-600" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-1">Google Account Integration</h3>
-                  <p className="text-sm text-blue-700 dark:text-blue-300 mb-3">
+                  <h3 className="font-semibold text-blue-900 mb-1">Google Account Integration</h3>
+                  <p className="text-sm text-blue-700 mb-3">
                     Your account is securely linked with Google. This provides enhanced security and seamless sign-in experience.
                   </p>
                   <div className="flex items-center gap-4 text-xs">
-                    <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
+                    <div className="flex items-center gap-1 text-green-600">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       <span>Verified Email</span>
                     </div>
-                    <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400">
+                    <div className="flex items-center gap-1 text-blue-600">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                       <span>Secure Authentication</span>
                     </div>
@@ -193,7 +197,7 @@ export default function Settings() {
                 </div>
               </div>
               <div className="absolute top-0 right-0 w-20 h-20 opacity-10">
-                <Shield className="w-full h-full text-blue-600 dark:text-blue-400" />
+                <Shield className="w-full h-full text-blue-600" />
               </div>
             </div>
           </section>
@@ -202,22 +206,22 @@ export default function Settings() {
         {/* Notifications */}
         <section className="mb-8">
           <div className="flex items-center gap-2 font-semibold mb-3 theme-text">
-            <Bell className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+            <Bell className="w-4 h-4 text-violet-600" />
             <span className="text-sm">Notifications</span>
           </div>
           <div className="theme-card border rounded-xl overflow-hidden shadow-sm">
             {NOTIFICATION_OPTIONS.map((option, index) => (
               <label
                 key={option.key}
-                className={`flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-150 ${
-                  index !== NOTIFICATION_OPTIONS.length - 1 ? 'border-b border-gray-100 dark:border-gray-600' : ''
+                className={`flex items-center justify-between p-4 cursor-pointer hover:opacity-80 transition-colors duration-150 ${
+                  index !== NOTIFICATION_OPTIONS.length - 1 ? 'border-b' : ''
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-2 h-2 rounded-full ${
                     notifications[option.key as keyof typeof notifications] 
                       ? 'bg-green-500' 
-                      : 'bg-gray-300 dark:bg-gray-500'
+                      : 'bg-gray-400'
                   }`}></div>
                   <span className="theme-text font-medium text-sm">{option.label}</span>
                 </div>
@@ -231,7 +235,7 @@ export default function Settings() {
                   <div className={`w-11 h-6 rounded-full transition-colors duration-200 ${
                     notifications[option.key as keyof typeof notifications]
                       ? 'bg-violet-600'
-                      : 'bg-gray-300 dark:bg-gray-500'
+                      : 'bg-gray-400'
                   }`}>
                     <div className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-200 ${
                       notifications[option.key as keyof typeof notifications]
