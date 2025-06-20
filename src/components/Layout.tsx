@@ -18,12 +18,12 @@ const Layout: React.FC<LayoutProps> = ({ children, title, subtitle }) => {
             {(title || subtitle) && (
               <div className="mb-6 text-center">
                 {title && (
-                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <h1 className="text-2xl font-bold theme-text">
                     {title}
                   </h1>
                 )}
                 {subtitle && (
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                  <p className="text-sm theme-text-secondary mt-1">
                     {subtitle}
                   </p>
                 )}
