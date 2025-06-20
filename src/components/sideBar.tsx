@@ -202,7 +202,7 @@ const NavItem = ({
               ? "theme-sidebar-active shadow-md"
               : muted
               ? "theme-sidebar-text opacity-50 hover:opacity-70"
-              : "theme-sidebar-text hover:theme-sidebar-hover hover:opacity-90"
+              : "theme-sidebar-text"
           }`}
       >
         {active && (

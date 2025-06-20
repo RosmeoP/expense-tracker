@@ -11,6 +11,9 @@
   --sidebar-bg: #ffffff;
   --sidebar-text: #334155;
   --sidebar-active: #3b82f6;
+  --hover-bg: rgba(139, 92, 246, 0.05);
+  --hover-border: rgba(139, 92, 246, 0.2);
+  --hover-text: #7c3aed;
 }
 
 /* Theme classes */
@@ -51,9 +54,16 @@
   color: white !important;
 }
 
-.theme-sidebar-hover {
+.theme-sidebar-text:hover {
   background-color: var(--bg-secondary) !important;
-  transition: background-color 0.2s ease;
+  opacity: 0.8 !important;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.theme-button-hover:hover {
+  background-color: var(--hover-bg) !important;
+  border-color: var(--hover-border) !important;
+  color: var(--hover-text) !important;
 }
 
 /* Apply theme to body */

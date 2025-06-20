@@ -97,7 +97,7 @@ export default function Settings() {
                 className={`flex flex-col items-center gap-1 py-3 px-2 rounded-lg font-medium text-sm transition-all duration-200 ${
                   theme === mode
                     ? "bg-violet-600 text-white shadow-lg scale-105"
-                    : "bg-gray-100 text-gray-700 hover:bg-violet-50 hover:text-violet-700 hover:scale-102"
+                    : "theme-card theme-button-hover hover:scale-102 border border-transparent"
                 }`}
                 onClick={() => setTheme(mode as typeof theme)}
               >

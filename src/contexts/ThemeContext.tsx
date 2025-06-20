@@ -51,6 +51,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       root.style.setProperty('--sidebar-bg', '#1e293b');
       root.style.setProperty('--sidebar-text', '#cbd5e1');
       root.style.setProperty('--sidebar-active', '#3b82f6');
+      root.style.setProperty('--hover-bg', 'rgba(139, 92, 246, 0.15)');
+      root.style.setProperty('--hover-border', 'rgba(139, 92, 246, 0.4)');
+      root.style.setProperty('--hover-text', '#a78bfa');
       root.classList.add('theme-dark');
       root.classList.remove('theme-light');
     } else {
@@ -63,6 +66,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       root.style.setProperty('--sidebar-bg', '#ffffff');
       root.style.setProperty('--sidebar-text', '#334155');
       root.style.setProperty('--sidebar-active', '#3b82f6');
+      root.style.setProperty('--hover-bg', 'rgba(139, 92, 246, 0.05)');
+      root.style.setProperty('--hover-border', 'rgba(139, 92, 246, 0.2)');
+      root.style.setProperty('--hover-text', '#7c3aed');
       root.classList.add('theme-light');
       root.classList.remove('theme-dark');
     }
